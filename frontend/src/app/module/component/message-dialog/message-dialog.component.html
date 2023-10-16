@@ -1,0 +1,7 @@
+<h1 mat-dialog-title class="title">{{data.title}}</h1>
+<div mat-dialog-content class="message">
+    {{data.message}}
+</div>
+<div mat-dialog-actions class="button" *ngIf="confirmButton">
+    <button mat-button color="warn" [mat-dialog-close]="true">OK</button>
+</div>

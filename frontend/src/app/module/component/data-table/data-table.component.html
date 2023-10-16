@@ -1,0 +1,47 @@
+<div [hidden]="hidden">
+    <mat-table [dataSource]="dataSource"
+               (matSortChange)="sortData($event)"
+               [matSortDisableClear]="true"
+               [matSortActive]="sortColumnDefault"
+               [matSortDirection]="sortDirectionDefault"
+               class="mat-elevation-z8"
+               matSort>
+        <ng-container *ngIf="rowAction" [matColumnDef]="rowActionColumnKey">
+            <mat-header-cell *matHeaderCellDef class="mat-header">
+                {{rowAction.name}}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let item">
+                <button *ngIf="item | dataPropertyGetter: rowAction.conditionalKey"
+                        [matTooltip]="rowAction.description"
+                        (click)="doRowAction(item)"
+                        mat-flat-button mat-icon-button>
+                    <mat-icon>{{rowAction.icon}}</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+        <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+            <mat-header-cell *matHeaderCellDef
+                             [disabled]="!pageable || !column.sortable"
+                             class="mat-header"
+                             mat-sort-header>
+                {{column.name}}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let item">
+                {{item | dataPropertyGetter: column.key | dateFormatterPipe | booleanFormatterPipe}}
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="columnKeys"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnKeys;"></mat-row>
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data found</td>
+        </tr>
+    </mat-table>
+    <mat-paginator *ngIf="pageable"
+                   #paginator [pageIndex]="pageNumber" [length]="totalElements" [pageSizeOptions]="[10, 100]"
+                   [pageSize]="pageSize" (page)="fetchData($event)" showFirstLastButtons>
+    </mat-paginator>
+</div>
+
+<div [hidden]="!hidden">
+    <mat-progress-spinner class="spinner" color="primary" mode="indeterminate"></mat-progress-spinner>
+</div>

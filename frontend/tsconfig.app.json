@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "outDir": "./out-tsc/app",
+        "types": [],
+        "resolveJsonModule": true,
+        "paths": {
+            "rxjs": [
+                "node_modules/rxjs"
+            ],
+            "rxjs/*": [
+                "node_modules/rxjs/*"
+            ]
+        }
+    },
+    "exclude": [
+        "src/test.ts",
+        "src/**/*.spec.ts"
+    ],
+    "extends": "./tsconfig.json",
+    "files": [
+        "src/main.ts",
+        "src/polyfills.ts"
+    ],
+    "include": [
+        "src/**/*.d.ts"
+    ]
+}

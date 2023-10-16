@@ -1,0 +1,52 @@
+@import "src/assets/scss/colors";
+
+.mat-table {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.mat-cell,
+.mat-header-cell {
+  min-width: max-content;
+  word-wrap: initial;
+  padding: 0 10px;
+  line-break: unset;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.mat-header-cell {
+  background-color: $color-navy-blue;
+}
+
+.mat-header {
+  color: $color-primary-white;
+  font-size: 13px;
+}
+
+::ng-deep .mat-sort-header-arrow {
+  color: $color-primary-white;
+}
+
+.mat-row:nth-child(even) {
+  background-color: $color-form-field-gray;
+}
+
+.mat-row:nth-child(odd) {
+  background-color: $color-form-field-white;
+}
+
+.mat-no-data-row {
+  width: 100%;
+  display: table;
+
+  .mat-cell {
+    display: table-cell;
+    text-align: center;
+  }
+}
+
+.spinner {
+  margin: 0 auto;
+}

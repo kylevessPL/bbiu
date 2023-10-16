@@ -1,0 +1,46 @@
+<div class="main-container" [class.is-mobile]="mobileQuery.matches">
+
+    <mat-toolbar class="toolbar">
+        <div class="toolbar-content">
+            <button mat-icon-button class="menu-button" (click)="snav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <img class="logo" ngSrc="assets/img/logo.svg" alt="Logo" height="757" width="2000">
+        </div>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="sidenav-container" [style.margin-top.px]="mobileQuery.matches ? 56 : 0">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+                     fixedTopGap="56" (click)="snav.close()">
+            <mat-nav-list>
+                <mat-list-item class="menu-selection-button" routerLinkActive="active"
+                               [routerLink]="['/noughts']">
+                    <mat-icon fontSet="material-icons-outlined" matListIcon>group</mat-icon>
+                    Noughts
+                </mat-list-item>
+                <mat-list-item class="menu-selection-button" routerLinkActive="active"
+                               [routerLink]="['/crosses']">
+                    <mat-icon fontSet="material-icons-outlined" matListIcon>apartment</mat-icon>
+                    Crosses
+                </mat-list-item>
+                <mat-list-item class="menu-selection-button" routerLinkActive="active"
+                               [routerLink]="['/noughts-crosses']">
+                    <mat-icon fontSet="material-icons-outlined" matListIcon>apartment</mat-icon>
+                    Noughts 'n' Crosses
+                </mat-list-item>
+                <router-outlet></router-outlet>
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="sidenav-content">
+            <main>
+                <router-outlet></router-outlet>
+            </main>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+    <div class="footer mt-auto py-3">
+        <app-footer></app-footer>
+    </div>
+</div>
+
+

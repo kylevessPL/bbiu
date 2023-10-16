@@ -1,0 +1,23 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.page {
+  padding: 10px;
+}
+
+.form-field {
+  margin-right: 2em;
+  margin-bottom: -1.25em;
+  display: inline-block !important;
+
+  small-field {
+    width: 500px;
+    max-width: 100%;
+  }
+}
