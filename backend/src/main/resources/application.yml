@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    password: bbiu-pwd
+    url: jdbc:h2:~/bbiu-db;AUTO_SERVER=TRUE
+    username: bbiu
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+  jackson:
+    default-property-inclusion: non_null
+server:
+  error:
+    include-binding-errors: always

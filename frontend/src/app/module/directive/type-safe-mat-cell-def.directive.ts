@@ -10,7 +10,10 @@ import {Observable} from 'rxjs';
 export class TypeSafeMatCellDefDirective<T> extends MatCellDef {
     @Input() matCellDefDataSource: T[] | Observable<T[]> | MatTableDataSource<T>;
 
-    static ngTemplateContextGuard<T>(dir: TypeSafeMatCellDefDirective<T>, ctx: unknown): ctx is { $implicit: T; index: number } {
+    static ngTemplateContextGuard<T>(dir: TypeSafeMatCellDefDirective<T>, ctx: unknown): ctx is {
+        $implicit: T;
+        index: number
+    } {
         return true;
     }
 }
