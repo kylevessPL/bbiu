@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.bbiu.domain.dto.CreateCrossDto;
 import pl.piasta.bbiu.domain.dto.UpdateCrossDto;
 import pl.piasta.bbiu.domain.exception.CrossNotFoundException;
@@ -42,8 +43,9 @@ class CrossesService implements CrossesManager {
     }
 
     @Override
+    @Transactional
     public void delete(long id) {
-        if (repository.deleteOneById(id)) {
+        if (repository.deleteOneById(id) == 0) {
             throw new CrossNotFoundException(id);
         }
     }

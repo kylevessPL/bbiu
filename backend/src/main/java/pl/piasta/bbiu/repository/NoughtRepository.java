@@ -12,5 +12,5 @@ public interface NoughtRepository extends JpaRepository<Nought, Long> {
 
     List<NoughtProjection> findAllBy();
 
-    boolean deleteOneById(Long id);
+    Integer deleteOneById(Long id);
 }

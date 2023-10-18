@@ -15,5 +15,5 @@ public interface CrossRepository extends JpaRepository<Cross, Long>, JpaSpecific
 
     Page<CrossProjection> findAllBy(Specification<Cross> specification, Pageable pageable);
 
-    boolean deleteOneById(Long id);
+    Integer deleteOneById(Long id);
 }

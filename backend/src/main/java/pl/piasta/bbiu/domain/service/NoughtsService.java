@@ -45,8 +45,9 @@ class NoughtsService implements NoughtsManager {
     }
 
     @Override
+    @Transactional
     public void delete(long id) {
-        if (repository.deleteOneById(id)) {
+        if (repository.deleteOneById(id) == 0) {
             throw new NoughtNotFoundException(id);
         }
     }
