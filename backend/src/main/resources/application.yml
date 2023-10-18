@@ -1,4 +1,8 @@
 spring:
+  web:
+    locale: en_US
+  jackson:
+    default-property-inclusion: non_null
   datasource:
     password: bbiu-pwd
     url: jdbc:h2:~/bbiu-db;AUTO_SERVER=TRUE
@@ -8,8 +12,8 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: create
-  jackson:
-    default-property-inclusion: non_null
 server:
   error:
     include-binding-errors: always
+
+
