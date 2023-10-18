@@ -15,7 +15,7 @@ public record CreateNoughtDto(
         @Length(max = NAME_LENGTH)
         String name,
         @NotNull
-        @DecimalMin("0.01")
+        @DecimalMin("0.1")
         @Digits(integer = 2, fraction = 1)
         double radius,
         @NotNull

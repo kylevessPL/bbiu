@@ -8,8 +8,8 @@ spring:
     url: jdbc:h2:~/bbiu-db;AUTO_SERVER=TRUE
     username: bbiu
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     open-in-view: false
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create
 server:

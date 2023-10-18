@@ -8,7 +8,7 @@ import static java.math.RoundingMode.CEILING;
 
 @UtilityClass
 public class NumberUtils {
-    private final int DOUBLE_PRECISION_DEFAULT = 2;
+    private final int DOUBLE_PRECISION_DEFAULT = 1;
 
     public double ceil(double value) {
         return ceil(value, DOUBLE_PRECISION_DEFAULT);
