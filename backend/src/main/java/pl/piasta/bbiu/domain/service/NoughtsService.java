@@ -13,8 +13,8 @@ import pl.piasta.bbiu.repository.NoughtRepository;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 class NoughtsService implements NoughtsManager {
     private final NoughtRepository repository;
 

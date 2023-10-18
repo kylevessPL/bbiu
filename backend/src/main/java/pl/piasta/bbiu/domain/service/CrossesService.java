@@ -14,6 +14,7 @@ import pl.piasta.bbiu.model.Cross;
 import pl.piasta.bbiu.repository.CrossRepository;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 class CrossesService implements CrossesManager {
     private final CrossRepository repository;
