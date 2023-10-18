@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.bbiu.domain.dto.CreateCrossDto;
@@ -18,6 +19,7 @@ import pl.piasta.bbiu.repository.CrossRepository;
 @RequiredArgsConstructor
 class CrossesService implements CrossesManager {
     private final CrossRepository repository;
+    private final ProjectionFactory projectionFactory;
 
     @Override
     @Transactional(readOnly = true)
@@ -28,7 +30,7 @@ class CrossesService implements CrossesManager {
     @Override
     @Transactional(readOnly = true)
     public Page<CrossProjection> getAll(Specification<Cross> specification, Pageable pageable) {
-        return repository.findAllBy(specification, pageable);
+        return repository.findAll(specification, pageable).map(this::project);
     }
 
     @Override
@@ -66,5 +68,9 @@ class CrossesService implements CrossesManager {
 
     private void updateCross(Cross cross, UpdateCrossDto dto) {
         cross.update(dto.angle(), dto.weight(), dto.beams(), dto.material(), dto.expiryDate(), dto.comment());
+    }
+
+    private CrossProjection project(Cross cross) {
+        return projectionFactory.createProjection(CrossProjection.class, cross);
     }
 }

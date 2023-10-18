@@ -6,16 +6,16 @@ import pl.piasta.bbiu.domain.enumeration.Color;
 import java.time.Instant;
 
 public interface NoughtProjection {
-        Long getId();
+    Long getId();
 
-        String getName();
+    String getName();
 
-        @Value("#{T(pl.piasta.bbiu.common.NumberUtils).ceil(target.radius)}")
-        double getRadius();
+    @Value("#{T(pl.piasta.bbiu.common.NumberUtils).ceil(target.radius)}")
+    double getRadius();
 
-        Color getColor();
+    Color getColor();
 
-        Instant getCreationDate();
+    Instant getCreationDate();
 
-        String getComment();
+    String getComment();
 }
