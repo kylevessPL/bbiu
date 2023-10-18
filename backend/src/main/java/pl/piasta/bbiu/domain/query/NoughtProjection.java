@@ -5,13 +5,17 @@ import pl.piasta.bbiu.domain.enumeration.Color;
 
 import java.time.Instant;
 
-public record NoughtProjection(
-        Long id,
-        String name,
-        @Value("#{target.angle.ceil()}")
-        double radius,
-        Color color,
-        Instant creationDate,
-        String comment
-) {
+public interface NoughtProjection {
+        Long getId();
+
+        String getName();
+
+        @Value("#{T(pl.piasta.bbiu.common.NumberUtils).ceil(target.radius)}")
+        double getRadius();
+
+        Color getColor();
+
+        Instant getCreationDate();
+
+        String getComment();
 }
