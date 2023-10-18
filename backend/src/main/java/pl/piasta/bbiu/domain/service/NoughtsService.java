@@ -13,30 +13,30 @@ import pl.piasta.bbiu.repository.NoughtRepository;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 class NoughtsService implements NoughtsManager {
     private final NoughtRepository repository;
 
     @Override
+    @Transactional(readOnly = true)
     public NoughtProjection get(long id) {
         return repository.findOneById(id).orElseThrow(() -> new NoughtNotFoundException(id));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<NoughtProjection> getAll() {
         return repository.findAllBy();
     }
 
     @Override
-    @Transactional
     public long create(CreateNoughtDto dto) {
         var naught = createNought(dto);
         return repository.save(naught).getId();
     }
 
     @Override
-    @Transactional
     public void update(long id, UpdateNoughtDto dto) {
         repository.findById(id).ifPresentOrElse(
                 nought -> updateNought(nought, dto),
@@ -45,7 +45,6 @@ class NoughtsService implements NoughtsManager {
     }
 
     @Override
-    @Transactional
     public void delete(long id) {
         if (repository.deleteOneById(id) == 0) {
             throw new NoughtNotFoundException(id);

@@ -14,17 +14,19 @@ import pl.piasta.bbiu.model.Cross;
 import pl.piasta.bbiu.repository.CrossRepository;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 class CrossesService implements CrossesManager {
     private final CrossRepository repository;
 
     @Override
+    @Transactional(readOnly = true)
     public CrossProjection get(long id) {
         return repository.findOneById(id).orElseThrow(() -> new CrossNotFoundException(id));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<CrossProjection> getAll(Specification<Cross> specification, Pageable pageable) {
         return repository.findAllBy(specification, pageable);
     }
@@ -44,7 +46,6 @@ class CrossesService implements CrossesManager {
     }
 
     @Override
-    @Transactional
     public void delete(long id) {
         if (repository.deleteOneById(id) == 0) {
             throw new CrossNotFoundException(id);
