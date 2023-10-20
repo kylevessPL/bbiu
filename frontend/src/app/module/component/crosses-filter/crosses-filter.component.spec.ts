@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import {DataTableComponent} from './data-table.component';
+import {CrossesFilterComponent} from './crosses-filter.component';
 import {Page} from '../../model/page';
 
-describe('DataTableComponent', () => {
-    let component: DataTableComponent<Page<any>>;
-    let fixture: ComponentFixture<DataTableComponent<any>>;
+describe('CrossesFilterComponent', () => {
+    let component: CrossesFilterComponent<Page<any>>;
+    let fixture: ComponentFixture<CrossesFilterComponent<any>>;
 
     beforeEach(waitForAsync(() => TestBed.configureTestingModule({
-        declarations: [DataTableComponent]
+        declarations: [CrossesFilterComponent]
     }).compileComponents()));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DataTableComponent);
+        fixture = TestBed.createComponent(CrossesFilterComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

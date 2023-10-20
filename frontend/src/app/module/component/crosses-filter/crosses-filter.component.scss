@@ -1,0 +1,16 @@
+.filter-btns {
+  top: 4.25px;
+  line-height: 1.125;
+  display: inline-flex;
+  width: 244px;
+  position: relative;
+
+  .mat-button-base {
+    height: 100%;
+    width: 100%;
+
+    &:not(:last-child) {
+      margin-right: 1em;
+    }
+  }
+}

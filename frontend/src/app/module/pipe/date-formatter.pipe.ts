@@ -4,11 +4,11 @@ import {environment} from '../../../environments/environment';
 
 @Pipe({name: 'dateFormatterPipe'})
 export class DateFormatterPipe implements PipeTransform {
-    readonly _datepipe: DatePipe = new DatePipe('en-US');
+    readonly datepipe: DatePipe = new DatePipe('en-US');
 
     transform(object: any): unknown {
         return object instanceof Date
-            ? this._datepipe.transform(object, environment.dateFormat)
+            ? this.datepipe.transform(object, environment.dateFormat)
             : object;
     }
 }

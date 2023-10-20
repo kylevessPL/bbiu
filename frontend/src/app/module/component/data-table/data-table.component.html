@@ -6,24 +6,23 @@
                [matSortDirection]="sortDirectionDefault"
                class="mat-elevation-z8"
                matSort>
-        <ng-container *ngIf="rowAction" [matColumnDef]="rowActionColumnKey">
+        <ng-container *ngIf="rowActions.length > 0" [matColumnDef]="rowActionColumnKey">
             <mat-header-cell *matHeaderCellDef class="mat-header">
-                {{rowAction.name}}
+                Action
             </mat-header-cell>
             <mat-cell *matCellDef="let item">
-                <button *ngIf="item | dataPropertyGetter: rowAction.conditionalKey"
-                        [matTooltip]="rowAction.description"
-                        (click)="doRowAction(item)"
+                <button *ngFor="let action of rowActions; index as i"
+                        [style.margin-right.px]="i != rowActions.length - 1 ? 4 : null"
+                        [color]="action.color"
+                        [matTooltip]="action.description"
+                        (click)="action.action(item)"
                         mat-flat-button mat-icon-button>
-                    <mat-icon>{{rowAction.icon}}</mat-icon>
+                    <mat-icon>{{action.icon}}</mat-icon>
                 </button>
             </mat-cell>
         </ng-container>
-        <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-            <mat-header-cell *matHeaderCellDef
-                             [disabled]="!pageable || !column.sortable"
-                             class="mat-header"
-                             mat-sort-header>
+        <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
+            <mat-header-cell *matHeaderCellDef class="mat-header" mat-sort-header>
                 {{column.name}}
             </mat-header-cell>
             <mat-cell *matCellDef="let item">
@@ -36,8 +35,7 @@
             <td class="mat-cell" colspan="4">No data found</td>
         </tr>
     </mat-table>
-    <mat-paginator *ngIf="pageable"
-                   #paginator [pageIndex]="pageNumber" [length]="totalElements" [pageSizeOptions]="[10, 100]"
+    <mat-paginator #paginator [pageIndex]="pageNumber" [length]="totalElements" [pageSizeOptions]="[10, 100]"
                    [pageSize]="pageSize" (page)="fetchData($event)" showFirstLastButtons>
     </mat-paginator>
 </div>

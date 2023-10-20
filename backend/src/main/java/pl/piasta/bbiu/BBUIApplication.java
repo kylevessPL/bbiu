@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -25,8 +26,13 @@ public class BBUIApplication implements WebMvcConfigurer {
         argumentResolvers.add(new SpecificationArgumentResolver());
     }
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+
     @Bean
-    public SpelAwareProxyProjectionFactory projectionFactory() {
+    SpelAwareProxyProjectionFactory projectionFactory() {
         return new SpelAwareProxyProjectionFactory();
     }
 }

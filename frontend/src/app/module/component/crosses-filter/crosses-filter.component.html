@@ -1,0 +1,69 @@
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="apply()" class="flex flex-wrap">
+    <div>
+        <mat-form-field class="form-field">
+            <mat-label>Id</mat-label>
+            <input matInput aria-autocomplete="none" type="number" min="1" formControlName="id" id="id-search">
+            <button matSuffix mat-icon-button type="button" (click)="clearField('id', $event)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <mat-label>Name</mat-label>
+            <input matInput aria-autocomplete="none" type="text" maxlength="30" formControlName="name" id="name-search">
+            <button matSuffix mat-icon-button type="button" (click)="clearField('name', $event)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <mat-label>Comment</mat-label>
+            <input matInput aria-autocomplete="none" type="text" maxlength="128" formControlName="comment"
+                   id="comment-search">
+            <button matSuffix mat-icon-button type="button" (click)="clearField('comment', $event)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <div class="filter-btns">
+            <button type="reset" mat-stroked-button color="primary">Reset</button>
+            <button type="submit" mat-raised-button color="primary">Apply</button>
+        </div>
+    </div>
+    <div>
+        <mat-form-field class="form-field">
+            <mat-label>Angle</mat-label>
+            <input matInput aria-autocomplete="none" type="number" min="0" max="45" formControlName="angle"
+                   id="angle-search">
+            <button matSuffix mat-icon-button type="button" (click)="clearField('angle', $event)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <mat-label>Weight</mat-label>
+            <input matInput aria-autocomplete="none" type="number" min="1" max="10" formControlName="weight"
+                   id="weight-search">
+            <button matSuffix mat-icon-button type="button" (click)="clearField('weight', $event)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <mat-label>Beams</mat-label>
+            <input matInput aria-autocomplete="none" type="number" min="1" formControlName="beams" id="beams-search">
+            <button matSuffix mat-icon-button type="button" (click)="clearField('beams', $event)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <mat-label>Material</mat-label>
+            <mat-select multiple
+                        formControlName="material"
+                        panelClass="select-clear"
+                        (closed)="selectClosed('material')">
+                <mat-option *ngFor="let key of materialKeys" [value]="key">
+                    {{material[key]}}
+                </mat-option>
+            </mat-select>
+            <button matSuffix mat-icon-button type="button" (click)="clearField('material', $event)">
+                <mat-icon>restart_alt</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+</form>

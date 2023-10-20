@@ -1,3 +1,3 @@
 package pl.piasta.bbiu.domain.enumeration;
 
-public enum Material {WOOD, METAL}
+public enum Material {WOOD, METAL, PLASTIC}

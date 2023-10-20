@@ -1,9 +1,6 @@
-import {Page} from '../models/page';
-
 export default class Utils {
-    static wrapToObject = <T extends Page<T>>(result: T[]) => {
-        return {
-            content: result
-        } as T;
-    };
+    static getEnumKey(myEnum: any, enumValue: number | string): string {
+        const keys = Object.keys(myEnum).filter(key => myEnum[key] === enumValue);
+        return keys.length > 0 ? keys[0] : undefined;
+    }
 }

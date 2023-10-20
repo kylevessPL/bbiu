@@ -1,17 +1,17 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import {NoughtsListComponent} from './noughts-list.component';
+import {CrossesComponent} from './crosses.component';
 
-describe('NoughtsListComponent', () => {
-    let component: NoughtsListComponent;
-    let fixture: ComponentFixture<NoughtsListComponent>;
+describe('CrossesComponent', () => {
+    let component: CrossesComponent;
+    let fixture: ComponentFixture<CrossesComponent>;
 
     beforeEach(waitForAsync(() => TestBed.configureTestingModule({
-        declarations: [NoughtsListComponent]
+        declarations: [CrossesComponent]
     }).compileComponents()));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(NoughtsListComponent);
+        fixture = TestBed.createComponent(CrossesComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

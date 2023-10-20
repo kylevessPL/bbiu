@@ -1,13 +1,14 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild} from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {Sort, SortDirection} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {HttpErrorResponse} from '@angular/common/http';
 import {GlobalService} from '../../service/global.service';
-import {TableColumn} from '../../models/table-column';
-import {Page} from '../../models/page';
-import {PageMeta} from '../../models/page-meta';
-import {TableRowAction} from '../../models/table-row-action';
+import {TableColumn} from '../../model/table-column';
+import {Page} from '../../model/page';
+import {PageMeta} from '../../model/page-meta';
+import {TableRowAction} from '../../model/table-row-action';
+import {timer} from "rxjs";
 
 @Component({
     selector: 'app-data-table',
@@ -16,15 +17,14 @@ import {TableRowAction} from '../../models/table-row-action';
 })
 export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges {
     @Input() columns: TableColumn[];
-    @Input() pageable = true;
     @Input() pageSize = 10;
     @Input() sortColumnDefault: string;
     @Input() sortDirectionDefault: SortDirection = 'asc';
-    @Input() rowAction: TableRowAction = null;
+    @Input() rowActions: TableRowAction<T>[] = [];
     @Input() data: T;
+    @Input() filter: Record<string, any>;
     @Input() error: HttpErrorResponse;
     @Output() pageEvent = new EventEmitter<PageMeta>();
-    @Output() rowActionEvent = new EventEmitter<T>();
 
     @ViewChild(MatPaginator, {read: true}) paginator: MatPaginator;
 
@@ -36,18 +36,23 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges 
     dataSource = new MatTableDataSource<T>();
     sort: Sort = null;
 
+    protected readonly top = top;
+    protected readonly console = console;
+
     constructor(private globalService: GlobalService) {
     }
 
     ngOnInit() {
-        this.columnKeys = this.columns.map(({columnDef}) => columnDef);
-        if (this.rowAction) {
+        this.columnKeys = this.columns.map(({key}) => key);
+        if (this.rowActions.length > 0) {
             this.columnKeys.push(this.rowActionColumnKey);
         }
     }
 
-    ngOnChanges() {
-        if (this.data) {
+    ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+        if (this.filterChanged(changes.filter)) {
+            timer(0).subscribe(() => this.fetchData());
+        } else if (this.data) {
             this.changeData();
         } else if (this.error && this.error.status !== 200) {
             this.globalService.showDataFetchErrorDialog();
@@ -62,11 +67,12 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges 
             page: event ? event.pageIndex : 0,
             size: event ? event.pageSize : this.pageSize,
             sort: this.sort ? this.sort.active : this.sortColumnDefault,
+            filter: this.filter,
             sortDirection: this.sort ? this.sort.direction : this.sortDirectionDefault
         };
         this.pageNumber = meta.page;
         this.pageEvent.emit(meta);
-    };
+    }
 
     sortData = (sort: Sort) => {
         this.hidden = true;
@@ -75,15 +81,15 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges 
             page: 0,
             size: this.pageSize,
             sort: sort.active,
+            filter: this.filter,
             sortDirection: sort.direction
         };
         this.sort = sort;
         this.pageEvent.emit(meta);
-    };
+    }
 
-    doRowAction = (item: T) => {
-        this.rowActionEvent.emit(item);
-    };
+    private filterChanged = (filter?: Record<string, any>) =>
+        filter && JSON.stringify(filter.previousValue) !== JSON.stringify(filter.currentValue)
 
     private changeData = () => {
         this.dataSource = new MatTableDataSource<T>(this.data.content);
@@ -93,5 +99,5 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges 
         this.pageSize = this.data.size;
         this.dataSource.paginator = this.paginator;
         this.hidden = false;
-    };
+    }
 }

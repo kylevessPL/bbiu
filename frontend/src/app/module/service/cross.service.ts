@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import {PageMeta} from '../models/page-meta';
+import {PageMeta} from '../model/page-meta';
 import {EncodeUriParamService} from './encode-uri-param.service';
 import {environment} from '../../../environments/environment';
 import {restUrl} from '../../../environments/rest-url';
-import {Order} from '../models/order';
+import {Cross} from '../model/cross';
+import {map} from 'rxjs';
+import {Material} from '../model/material.enum';
 
 @Injectable({providedIn: 'root'})
 export class CrossService {
@@ -11,5 +13,16 @@ export class CrossService {
     }
 
     public getAllCrosses = (pageMeta?: PageMeta) =>
-        this.httpClient.getPage<Order>(`${environment.baseUrl}/${restUrl.crossesBase}`, pageMeta);
+        this.httpClient.getPage<Cross>(`${environment.baseUrl}/${restUrl.crossesBase}`, pageMeta)
+            .pipe(map(crosses => this.mapCrosses(crosses)))
+
+    private mapCrosses(response: Cross) {
+        response.content = response.content.map(this.mapCross);
+        return response;
+    }
+
+    private mapCross(item: Cross) {
+        item.material = Material[item.material];
+        return item;
+    }
 }

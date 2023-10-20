@@ -3,7 +3,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {NgModule} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -31,13 +31,16 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatBadgeModule} from '@angular/material/badge';
 import {NoughtsComponent} from './module/page/noughts/noughts.component';
 import {DataPropertyGetterPipe} from './module/pipe/data-property-getter.pipe';
-import {NoughtsListComponent} from './module/component/noughts-list/noughts-list.component';
+import {CrossesComponent} from './module/page/crosses/crosses.component';
+import {CrossesFilterComponent} from './module/component/crosses-filter/crosses-filter.component';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
     declarations: [
         AppComponent,
         NoughtsComponent,
-        NoughtsListComponent,
+        CrossesComponent,
+        CrossesFilterComponent,
         FooterComponent,
         DataTableComponent,
         MessageDialogComponent,
@@ -66,7 +69,8 @@ import {NoughtsListComponent} from './module/component/noughts-list/noughts-list
         MatDatepickerModule,
         MatSelectModule,
         MatBadgeModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        MatGridListModule
     ],
     providers: [
         {
@@ -83,6 +87,12 @@ import {NoughtsListComponent} from './module/component/noughts-list/noughts-list
         {
             provide: LocationStrategy,
             useClass: HashLocationStrategy
+        },
+        {
+            provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+            useValue: {
+                appearance: 'outline'
+            }
         }
     ],
     bootstrap: [AppComponent]

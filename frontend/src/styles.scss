@@ -12,12 +12,18 @@ body {
 }
 
 .form-field {
-  margin-right: 2em;
-  margin-bottom: -1.25em;
+  margin-right: 1em;
   display: inline-block !important;
+}
 
-  small-field {
-    width: 500px;
-    max-width: 100%;
-  }
+.select-clear {
+  min-width: calc(100% + 104px) !important;
+}
+
+.mat-sort-header-content {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
