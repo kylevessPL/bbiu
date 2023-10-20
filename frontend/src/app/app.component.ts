@@ -10,18 +10,18 @@ export class AppComponent implements OnInit, OnDestroy {
     title = 'BBIU';
     mobileQuery: MediaQueryList;
 
-    private readonly _mobileQueryListener: () => void;
+    private readonly mobileQueryListener: () => void;
 
     constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
         this.mobileQuery = media.matchMedia('(max-width: 600px)');
-        this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+        this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     }
 
     ngOnInit() {
-        this.mobileQuery.addEventListener('change', this._mobileQueryListener);
+        this.mobileQuery.addEventListener('change', this.mobileQueryListener);
     }
 
     ngOnDestroy() {
-        this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
+        this.mobileQuery.removeEventListener('change', this.mobileQueryListener);
     }
 }

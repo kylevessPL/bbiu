@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Product} from '../../models/product';
-import {PageMeta} from '../../models/page-meta';
+import {PageMeta} from '../../model/page-meta';
 import {GlobalService} from '../../service/global.service';
 import {NoughtService} from '../../service/nought.service';
 
@@ -12,7 +11,7 @@ import {NoughtService} from '../../service/nought.service';
     styleUrls: ['./noughts.component.scss']
 })
 export class NoughtsComponent implements OnInit {
-    data: Observable<Product>;
+    data: Observable<any>;
     pageMeta: PageMeta = {
         page: 0,
         size: 5,
@@ -35,5 +34,5 @@ export class NoughtsComponent implements OnInit {
     fetchData = (pageMeta: PageMeta) => {
         this.pageMeta = pageMeta;
         this.data = this.productService.getAllNoughts(pageMeta);
-    };
+    }
 }

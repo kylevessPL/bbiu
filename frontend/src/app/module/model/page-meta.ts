@@ -1,9 +1,10 @@
 import {SortDirection} from '@angular/material/sort';
 
 export interface PageMeta {
-    page: number,
-    size: number,
-    sort: string,
+    page: number;
+    size: number;
+    sort: string;
+    filter?: Record<string, any>;
     sortDirection: SortDirection;
 }
 

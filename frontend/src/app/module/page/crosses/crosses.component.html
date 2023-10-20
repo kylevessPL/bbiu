@@ -1,0 +1,23 @@
+<div class="page">
+    <mat-card>
+        <div class="border-top"></div>
+        <mat-card-title>Crosses</mat-card-title>
+        <div class="border-bottom"></div>
+        <div class="action-section">
+            <app-crosses-filter (filterEvent)="applyFilter($event)"></app-crosses-filter>
+            <button mat-fab class="create-btn extended-fab" color="primary" (click)="createCross()">
+                <mat-icon>add</mat-icon>
+                <span class="extended-fab__text">Create</span>
+            </button>
+        </div>
+        <app-data-table
+                [data]="data | async"
+                [filter]="filter"
+                [columns]="columns"
+                [rowActions]="rowActions"
+                [error]="error"
+                (pageEvent)="fetchData($event)"
+                sortColumnDefault="id">
+        </app-data-table>
+    </mat-card>
+</div>

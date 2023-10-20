@@ -1,9 +1,12 @@
 import {Injectable} from '@angular/core';
-import {PageMeta} from '../models/page-meta';
+import {PageMeta} from '../model/page-meta';
 import {EncodeUriParamService} from './encode-uri-param.service';
 import {environment} from '../../../environments/environment';
 import {restUrl} from '../../../environments/rest-url';
-import {Product} from '../models/product';
+import {map} from "rxjs";
+import {Cross} from "../model/cross";
+import {Nought} from "../model/nought";
+import {Color} from "../model/color.enum";
 
 @Injectable({providedIn: 'root'})
 export class NoughtService {
@@ -11,5 +14,16 @@ export class NoughtService {
     }
 
     public getAllNoughts = (pageMeta?: PageMeta) =>
-        this.httpClient.getPage<Product>(`${environment.baseUrl}/${restUrl.noughtsBase}`, pageMeta);
+        this.httpClient.getPage<any>(`${environment.baseUrl}/${restUrl.noughtsBase}`, pageMeta)
+            .pipe(map(crosses => this.mapNoughts(crosses)))
+
+    private mapNoughts(response: Cross) {
+        // response.content = response.content.map(this.mapNought);
+        return response;
+    }
+
+    private mapNought(item: Nought) {
+        item.color = Color[item.color];
+        return item;
+    }
 }

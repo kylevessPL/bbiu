@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {share} from 'rxjs/operators';
-import {PageMeta, pageMetaDefault} from '../models/page-meta';
+import {PageMeta, pageMetaDefault} from '../model/page-meta';
 
 @Injectable({providedIn: 'root'})
 export class EncodeUriParamService {
@@ -10,25 +10,31 @@ export class EncodeUriParamService {
 
     public get = <T>(url: string, param?: string) => this.httpClient
         .get<T>(url + '/' + encodeURIComponent(param))
-        .pipe(share());
+        .pipe(share())
 
     public getPage = <T>(url: string, pageMeta: PageMeta = pageMetaDefault) => this.httpClient
         .get<T>(url, {params: this.getPageMetaParams(pageMeta)})
-        .pipe(share());
+        .pipe(share())
 
     public post = <T>(url: string, body: object, param?: string) => this.httpClient
         .post<T>(url + encodeURIComponent(param), body)
-        .pipe(share());
+        .pipe(share())
 
     public delete = (url: string, param?: string) => this.httpClient
         .delete(url + '/' + encodeURIComponent(param), {observe: 'response'})
-        .pipe(share());
+        .pipe(share())
 
-    private getPageMetaParams = (pageMeta: PageMeta) => new HttpParams({
-        fromObject: {
-            page: `${pageMeta.page}`,
-            size: `${pageMeta.size}`,
-            sort: `${pageMeta.sort},${pageMeta.sortDirection},ignorecase`,
+    private getPageMetaParams = (pageMeta: PageMeta) => {
+        let params = new HttpParams()
+            .set('page', `${pageMeta.page}`)
+            .set('size', `${pageMeta.size}`)
+            .set('sort', `${pageMeta.sort},${pageMeta.sortDirection},ignorecase`);
+        if (pageMeta.filter) {
+            for (const key of Object.keys(pageMeta.filter)) {
+                const value = pageMeta.filter[key];
+                params = params.set(key, value);
+            }
         }
-    });
+        return params;
+    }
 }
