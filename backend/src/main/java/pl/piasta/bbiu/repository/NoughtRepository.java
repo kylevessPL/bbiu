@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NoughtRepository extends JpaRepository<Nought, Long> {
+    boolean existsByName(String name);
+
     Optional<NoughtProjection> findOneById(Long id);
 
     List<NoughtBasicProjection> findAllBy();

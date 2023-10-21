@@ -8,6 +8,8 @@ import pl.piasta.bbiu.model.Cross;
 import java.util.Optional;
 
 public interface CrossRepository extends JpaRepository<Cross, Long>, JpaSpecificationExecutor<Cross> {
+    boolean existsByName(String name);
+
     Optional<CrossProjection> findOneById(Long id);
 
     Integer deleteOneById(Long id);

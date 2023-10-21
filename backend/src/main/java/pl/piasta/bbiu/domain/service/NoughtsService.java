@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.bbiu.domain.dto.CreateNoughtDto;
 import pl.piasta.bbiu.domain.dto.UpdateNoughtDto;
+import pl.piasta.bbiu.domain.exception.NoughtNameUniquenessViolationException;
 import pl.piasta.bbiu.domain.exception.NoughtNotFoundException;
 import pl.piasta.bbiu.domain.query.NoughtBasicProjection;
 import pl.piasta.bbiu.domain.query.NoughtProjection;
@@ -33,6 +34,9 @@ class NoughtsService implements NoughtsManager {
 
     @Override
     public long create(CreateNoughtDto dto) {
+        if (repository.existsByName(dto.name())) {
+            throw new NoughtNameUniquenessViolationException(dto.name());
+        }
         var naught = createNought(dto);
         return repository.save(naught).getId();
     }

@@ -34,7 +34,7 @@ public class Nought {
     @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false, length = NAME_LENGTH, updatable = false)
+    @Column(nullable = false, unique = true, updatable = false, length = NAME_LENGTH)
     private String name;
 
     @Column(nullable = false)

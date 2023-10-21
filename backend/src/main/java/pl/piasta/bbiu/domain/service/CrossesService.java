@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.bbiu.domain.dto.CreateCrossDto;
 import pl.piasta.bbiu.domain.dto.UpdateCrossDto;
+import pl.piasta.bbiu.domain.exception.CrossNameUniquenessViolationException;
 import pl.piasta.bbiu.domain.exception.CrossNotFoundException;
 import pl.piasta.bbiu.domain.query.CrossProjection;
 import pl.piasta.bbiu.model.Cross;
@@ -35,6 +36,9 @@ class CrossesService implements CrossesManager {
 
     @Override
     public long create(CreateCrossDto dto) {
+        if (repository.existsByName(dto.name())) {
+            throw new CrossNameUniquenessViolationException(dto.name());
+        }
         var cross = createCross(dto);
         return repository.save(cross).getId();
     }
