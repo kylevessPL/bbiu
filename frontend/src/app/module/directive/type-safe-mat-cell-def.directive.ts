@@ -4,7 +4,7 @@ import {MatCellDef, MatTableDataSource} from '@angular/material/table';
 import {Observable} from 'rxjs';
 
 @Directive({
-    selector: '[matCellDef]',
+    selector: '[appMatCellDef]',
     providers: [{provide: CdkCellDef, useExisting: TypeSafeMatCellDefDirective}]
 })
 export class TypeSafeMatCellDefDirective<T> extends MatCellDef {

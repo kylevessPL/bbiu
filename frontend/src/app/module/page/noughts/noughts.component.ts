@@ -23,7 +23,7 @@ export class NoughtsComponent implements OnInit {
     constructor(private productService: NoughtService, private globalService: GlobalService) {
     }
 
-    ngOnInit() {
+    ngOnInit = () => {
         this.globalService.httpErrorStatus.subscribe(error => {
             this.error = error;
         });

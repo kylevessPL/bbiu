@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {first, Observable, Subject} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {PageMeta} from '../../model/page-meta';
 import {GlobalService} from '../../service/global.service';
@@ -8,6 +8,12 @@ import {CrossService} from '../../service/cross.service';
 import {TableRowAction} from '../../model/table-row-action';
 import {TableColumn} from '../../model/table-column';
 import {Material} from "../../model/material.enum";
+import {
+    ConfirmationData,
+    ConfirmationDialogComponent
+} from "../../component/confirmation-dialog/confirmation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-crosses',
@@ -88,12 +94,17 @@ export class CrossesComponent implements OnInit {
     filter: Record<string, any> = {
         material: Object.keys(Material)
     };
+    forceRefresh = new Subject<void>();
     error: HttpErrorResponse;
 
-    constructor(private crossService: CrossService, private globalService: GlobalService) {
+    constructor(
+        private dialog: MatDialog,
+        private snackBar: MatSnackBar,
+        private crossService: CrossService,
+        private globalService: GlobalService) {
     }
 
-    ngOnInit() {
+    ngOnInit = () => {
         this.globalService.httpErrorStatus.subscribe(error => {
             this.error = error;
         });
@@ -118,6 +129,30 @@ export class CrossesComponent implements OnInit {
     }
 
     deleteCross = (cross: Cross) => {
-        console.log('delete');
+        this.confirmDeletion(cross)
+            .pipe(first())
+            .subscribe((res: boolean) => res && this.deleteAndRefresh(cross));
     }
+
+    private deleteAndRefresh = (cross: Cross) => {
+        this.crossService.deleteCross(cross.id)
+            .pipe(first())
+            .subscribe(res => {
+                if (res?.ok) {
+                    this.forceRefresh.next();
+                    this.showDeletionNotification(cross.name);
+                }
+            });
+    }
+
+    private showDeletionNotification = (name: string) => {
+        this.snackBar.open(`${name} has been deleted`, 'OK');
+    }
+
+    private confirmDeletion = (cross: Cross) => this.dialog.open(ConfirmationDialogComponent, {
+        data: {
+            title: 'Cross deletion',
+            message: `Are you sure you want to delete ${cross.name}?`,
+        } as ConfirmationData
+    }).afterClosed()
 }

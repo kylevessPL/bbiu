@@ -17,7 +17,7 @@ export class CrossesFilterComponent implements OnInit {
     constructor(private fb: FormBuilder) {
     }
 
-    ngOnInit() {
+    ngOnInit = () => {
         this.form = this.fb.group({
             id: null,
             name: null,
@@ -29,7 +29,7 @@ export class CrossesFilterComponent implements OnInit {
         });
     }
 
-    apply() {
+    apply = () => {
         const filter: Record<string, any> = Object.entries(this.form.value)
             .filter(([key, value]) => value !== null && value !== '')
             .reduce((acc, [key, value]) => {
@@ -39,12 +39,12 @@ export class CrossesFilterComponent implements OnInit {
         this.filterEvent.emit(filter);
     }
 
-    clearField(field: string, $event: Event = null) {
+    clearField = (field: string, $event: Event = null) => {
         this.form.get(field).reset();
         $event?.stopPropagation();
     }
 
-    selectClosed(field: string) {
+    selectClosed = (field: string) => {
         if (this.form.get(field).value.length === 0) {
             this.clearField(field);
         }

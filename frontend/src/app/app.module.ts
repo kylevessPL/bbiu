@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {NgModule} from '@angular/core';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
@@ -14,7 +14,6 @@ import {DataTableComponent} from './module/component/data-table/data-table.compo
 import {FooterComponent} from './module/component/footer/footer.component';
 import {HttpErrorInterceptor} from './config/security/interceptor/http-error.interceptor';
 import {HashLocationStrategy, LocationStrategy, NgOptimizedImage} from '@angular/common';
-import {MessageDialogComponent} from './module/component/message-dialog/message-dialog.component';
 import {GlobalService} from './module/service/global.service';
 import {TypeSafeMatCellDefDirective} from './module/directive/type-safe-mat-cell-def.directive';
 import {DateFormatterPipe} from './module/pipe/date-formatter.pipe';
@@ -33,7 +32,8 @@ import {NoughtsComponent} from './module/page/noughts/noughts.component';
 import {DataPropertyGetterPipe} from './module/pipe/data-property-getter.pipe';
 import {CrossesComponent} from './module/page/crosses/crosses.component';
 import {CrossesFilterComponent} from './module/component/crosses-filter/crosses-filter.component';
-import {MatGridListModule} from "@angular/material/grid-list";
+import {ConfirmationDialogComponent} from './module/component/confirmation-dialog/confirmation-dialog.component';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 
 @NgModule({
     declarations: [
@@ -43,7 +43,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
         CrossesFilterComponent,
         FooterComponent,
         DataTableComponent,
-        MessageDialogComponent,
+        ConfirmationDialogComponent,
         TypeSafeMatCellDefDirective,
         DataPropertyGetterPipe,
         DateFormatterPipe,
@@ -69,8 +69,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
         MatDatepickerModule,
         MatSelectModule,
         MatBadgeModule,
-        NgOptimizedImage,
-        MatGridListModule
+        NgOptimizedImage
     ],
     providers: [
         {
@@ -92,6 +91,18 @@ import {MatGridListModule} from "@angular/material/grid-list";
             provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
             useValue: {
                 appearance: 'outline'
+            }
+        },
+        {
+            provide: MAT_DIALOG_DEFAULT_OPTIONS,
+            useValue: {
+                autoFocus: false
+            }
+        },
+        {
+            provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+            useValue: {
+                duration: 3000
             }
         }
     ],

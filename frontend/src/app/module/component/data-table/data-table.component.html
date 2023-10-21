@@ -10,7 +10,7 @@
             <mat-header-cell *matHeaderCellDef class="mat-header">
                 Action
             </mat-header-cell>
-            <mat-cell *matCellDef="let item">
+            <mat-cell *appMatCellDef="let item">
                 <button *ngFor="let action of rowActions; index as i"
                         [style.margin-right.px]="i != rowActions.length - 1 ? 4 : null"
                         [color]="action.color"
@@ -25,7 +25,7 @@
             <mat-header-cell *matHeaderCellDef class="mat-header" mat-sort-header>
                 {{column.name}}
             </mat-header-cell>
-            <mat-cell *matCellDef="let item">
+            <mat-cell *appMatCellDef="let item">
                 {{item | dataPropertyGetter: column.key | dateFormatterPipe | booleanFormatterPipe}}
             </mat-cell>
         </ng-container>

@@ -15,6 +15,7 @@
                 [filter]="filter"
                 [columns]="columns"
                 [rowActions]="rowActions"
+                [forceRefresh]="forceRefresh.asObservable()"
                 [error]="error"
                 (pageEvent)="fetchData($event)"
                 sortColumnDefault="id">

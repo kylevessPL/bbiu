@@ -4,24 +4,24 @@ import {share} from 'rxjs/operators';
 import {PageMeta, pageMetaDefault} from '../model/page-meta';
 
 @Injectable({providedIn: 'root'})
-export class EncodeUriParamService {
+export class BackendService {
     constructor(private httpClient: HttpClient) {
     }
 
-    public get = <T>(url: string, param?: string) => this.httpClient
-        .get<T>(url + '/' + encodeURIComponent(param))
+    public get = <T>(url: string) => this.httpClient
+        .get<T>(url)
         .pipe(share())
 
     public getPage = <T>(url: string, pageMeta: PageMeta = pageMetaDefault) => this.httpClient
         .get<T>(url, {params: this.getPageMetaParams(pageMeta)})
         .pipe(share())
 
-    public post = <T>(url: string, body: object, param?: string) => this.httpClient
-        .post<T>(url + encodeURIComponent(param), body)
+    public post = <T>(url: string, body: object) => this.httpClient
+        .post<T>(url, body)
         .pipe(share())
 
-    public delete = (url: string, param?: string) => this.httpClient
-        .delete(url + '/' + encodeURIComponent(param), {observe: 'response'})
+    public delete = (url: string) => this.httpClient
+        .delete(url, {observe: 'response'})
         .pipe(share())
 
     private getPageMetaParams = (pageMeta: PageMeta) => {

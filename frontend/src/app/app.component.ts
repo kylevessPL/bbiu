@@ -17,11 +17,11 @@ export class AppComponent implements OnInit, OnDestroy {
         this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     }
 
-    ngOnInit() {
+    ngOnInit = () => {
         this.mobileQuery.addEventListener('change', this.mobileQueryListener);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy = () => {
         this.mobileQuery.removeEventListener('change', this.mobileQueryListener);
     }
 }

@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, ViewChild} from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChange,
+    ViewChild
+} from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {Sort, SortDirection} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -8,14 +18,14 @@ import {TableColumn} from '../../model/table-column';
 import {Page} from '../../model/page';
 import {PageMeta} from '../../model/page-meta';
 import {TableRowAction} from '../../model/table-row-action';
-import {timer} from "rxjs";
+import {Observable, Subscription, timer} from "rxjs";
 
 @Component({
     selector: 'app-data-table',
     templateUrl: './data-table.component.html',
     styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges {
+export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy, OnChanges {
     @Input() columns: TableColumn[];
     @Input() pageSize = 10;
     @Input() sortColumnDefault: string;
@@ -23,6 +33,7 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges 
     @Input() rowActions: TableRowAction<T>[] = [];
     @Input() data: T;
     @Input() filter: Record<string, any>;
+    @Input() forceRefresh = new Observable<void>();
     @Input() error: HttpErrorResponse;
     @Output() pageEvent = new EventEmitter<PageMeta>();
 
@@ -36,20 +47,24 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnChanges 
     dataSource = new MatTableDataSource<T>();
     sort: Sort = null;
 
-    protected readonly top = top;
-    protected readonly console = console;
+    private forceRefreshSubscription: Subscription;
 
     constructor(private globalService: GlobalService) {
     }
 
-    ngOnInit() {
+    ngOnInit = () => {
         this.columnKeys = this.columns.map(({key}) => key);
         if (this.rowActions.length > 0) {
             this.columnKeys.push(this.rowActionColumnKey);
         }
+        this.forceRefreshSubscription = this.forceRefresh.subscribe(() => this.fetchData());
     }
 
-    ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+    ngOnDestroy = () => {
+        this.forceRefreshSubscription.unsubscribe();
+    }
+
+    ngOnChanges = (changes: { [propName: string]: SimpleChange }) => {
         if (this.filterChanged(changes.filter)) {
             timer(0).subscribe(() => this.fetchData());
         } else if (this.data) {
