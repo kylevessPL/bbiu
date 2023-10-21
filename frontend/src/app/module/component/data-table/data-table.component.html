@@ -7,9 +7,7 @@
                class="mat-elevation-z8"
                matSort>
         <ng-container *ngIf="rowActions.length > 0" [matColumnDef]="rowActionColumnKey">
-            <mat-header-cell *matHeaderCellDef class="mat-header">
-                Action
-            </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef class="mat-header">Action</mat-header-cell>
             <mat-cell *appMatCellDef="let item">
                 <button *ngFor="let action of rowActions; index as i"
                         [style.margin-right.px]="i != rowActions.length - 1 ? 4 : null"
@@ -21,10 +19,12 @@
                 </button>
             </mat-cell>
         </ng-container>
+        <ng-container [matColumnDef]="rowIndexColumnKey">
+            <mat-header-cell *matHeaderCellDef class="mat-header">#</mat-header-cell>
+            <mat-cell *appMatCellDef="let i = index">{{i + 1}}</mat-cell>
+        </ng-container>
         <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
-            <mat-header-cell *matHeaderCellDef class="mat-header" mat-sort-header>
-                {{column.name}}
-            </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef class="mat-header" mat-sort-header>{{column.name}}</mat-header-cell>
             <mat-cell *appMatCellDef="let item">
                 {{item | dataPropertyGetter: column.key | dateFormatterPipe | booleanFormatterPipe}}
             </mat-cell>

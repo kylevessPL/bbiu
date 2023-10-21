@@ -40,8 +40,9 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy,
     @ViewChild(MatPaginator, {read: true}) paginator: MatPaginator;
 
     hidden = true;
+    rowIndexColumnKey = 'index';
     rowActionColumnKey = 'action';
-    columnKeys: string[];
+    columnKeys = [this.rowIndexColumnKey];
     totalElements = 0;
     pageNumber = 0;
     dataSource = new MatTableDataSource<T>();
@@ -53,7 +54,7 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy,
     }
 
     ngOnInit() {
-        this.columnKeys = this.columns.map(({key}) => key);
+        this.columnKeys = this.columnKeys.concat(this.columns.map(({key}) => key));
         if (this.rowActions.length > 0) {
             this.columnKeys.push(this.rowActionColumnKey);
         }

@@ -7,13 +7,13 @@ import {Cross} from '../../model/cross';
 import {CrossService} from '../../service/cross.service';
 import {TableRowAction} from '../../model/table-row-action';
 import {TableColumn} from '../../model/table-column';
-import {Material} from "../../model/material.enum";
+import {Material} from '../../model/material.enum';
 import {
     ConfirmationData,
     ConfirmationDialogComponent
-} from "../../component/confirmation-dialog/confirmation-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
+} from '../../component/confirmation-dialog/confirmation-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-crosses',
