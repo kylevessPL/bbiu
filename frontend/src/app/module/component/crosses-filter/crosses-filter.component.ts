@@ -17,7 +17,7 @@ export class CrossesFilterComponent implements OnInit {
     constructor(private fb: FormBuilder) {
     }
 
-    ngOnInit = () => {
+    ngOnInit() {
         this.form = this.fb.group({
             id: null,
             name: null,

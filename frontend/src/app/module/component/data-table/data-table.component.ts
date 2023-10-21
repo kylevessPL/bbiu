@@ -52,7 +52,7 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy,
     constructor(private globalService: GlobalService) {
     }
 
-    ngOnInit = () => {
+    ngOnInit() {
         this.columnKeys = this.columns.map(({key}) => key);
         if (this.rowActions.length > 0) {
             this.columnKeys.push(this.rowActionColumnKey);
@@ -60,11 +60,11 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy,
         this.forceRefreshSubscription = this.forceRefresh.subscribe(() => this.fetchData());
     }
 
-    ngOnDestroy = () => {
+    ngOnDestroy() {
         this.forceRefreshSubscription.unsubscribe();
     }
 
-    ngOnChanges = (changes: { [propName: string]: SimpleChange }) => {
+    ngOnChanges(changes: { [propName: string]: SimpleChange }) {
         if (this.filterChanged(changes.filter)) {
             timer(0).subscribe(() => this.fetchData());
         } else if (this.data) {

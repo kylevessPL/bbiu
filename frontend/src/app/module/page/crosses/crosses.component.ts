@@ -104,7 +104,7 @@ export class CrossesComponent implements OnInit {
         private globalService: GlobalService) {
     }
 
-    ngOnInit = () => {
+    ngOnInit() {
         this.globalService.httpErrorStatus.subscribe(error => {
             this.error = error;
         });
