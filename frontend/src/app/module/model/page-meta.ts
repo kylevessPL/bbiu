@@ -10,7 +10,7 @@ export interface PageMeta {
 
 export const pageMetaDefault: PageMeta = {
     page: 0,
-    size: 10,
+    size: 5,
     sort: 'id',
     sortDirection: 'asc'
 };
