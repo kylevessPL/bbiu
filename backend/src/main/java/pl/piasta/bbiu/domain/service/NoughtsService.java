@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.bbiu.domain.dto.CreateNoughtDto;
 import pl.piasta.bbiu.domain.dto.UpdateNoughtDto;
 import pl.piasta.bbiu.domain.exception.NoughtNotFoundException;
+import pl.piasta.bbiu.domain.query.NoughtBasicProjection;
 import pl.piasta.bbiu.domain.query.NoughtProjection;
 import pl.piasta.bbiu.model.Nought;
 import pl.piasta.bbiu.repository.NoughtRepository;
@@ -26,7 +27,7 @@ class NoughtsService implements NoughtsManager {
 
     @Override
     @Transactional(readOnly = true)
-    public List<NoughtProjection> getAll() {
+    public List<NoughtBasicProjection> getAll() {
         return repository.findAllBy();
     }
 

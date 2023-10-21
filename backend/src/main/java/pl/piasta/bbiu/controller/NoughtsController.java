@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.piasta.bbiu.common.CreatedResource;
 import pl.piasta.bbiu.domain.dto.CreateNoughtDto;
 import pl.piasta.bbiu.domain.dto.UpdateNoughtDto;
+import pl.piasta.bbiu.domain.query.NoughtBasicProjection;
 import pl.piasta.bbiu.domain.query.NoughtProjection;
 import pl.piasta.bbiu.domain.service.NoughtsManager;
 
@@ -31,7 +32,7 @@ class NoughtsController {
     private final NoughtsManager manager;
 
     @GetMapping
-    public List<NoughtProjection> getAllNoughts() {
+    public List<NoughtBasicProjection> getAllNoughts() {
         return manager.getAll();
     }
 
