@@ -17,7 +17,11 @@ export class BackendService {
         .pipe(share())
 
     public post = <T>(url: string, body: object) => this.httpClient
-        .post<T>(url, body)
+        .post<T>(url, body, {observe: 'response'})
+        .pipe(share())
+
+    public put = <T>(url: string, body: object) => this.httpClient
+        .put<T>(url, body)
         .pipe(share())
 
     public delete = (url: string) => this.httpClient

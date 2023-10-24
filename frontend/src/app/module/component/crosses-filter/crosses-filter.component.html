@@ -55,7 +55,7 @@
             <mat-label>Material</mat-label>
             <mat-select multiple
                         formControlName="material"
-                        panelClass="select-clear"
+                        panelClass="select-reset"
                         (closed)="selectClosed('material')">
                 <mat-option *ngFor="let key of materialKeys" [value]="key">
                     {{material[key]}}

@@ -6,4 +6,5 @@ export interface Nought {
     radius: number;
     color: Color;
     comment: string;
+    creationDate: Date;
 }

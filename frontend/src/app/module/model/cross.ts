@@ -9,6 +9,7 @@ export interface Cross extends Page<Cross> {
     weight: number;
     beams: number;
     material: Material;
+    creationDate: Date;
     expiryDate: Date;
     comment: string;
 }

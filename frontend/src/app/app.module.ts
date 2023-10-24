@@ -2,8 +2,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {NgModule} from '@angular/core';
-import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule} from '@angular/material/dialog';
+import {
+    MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    MatFormFieldDefaultOptions,
+    MatFormFieldModule
+} from '@angular/material/form-field';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -33,13 +37,23 @@ import {DataPropertyGetterPipe} from './module/pipe/data-property-getter.pipe';
 import {CrossesComponent} from './module/page/crosses/crosses.component';
 import {CrossesFilterComponent} from './module/component/crosses-filter/crosses-filter.component';
 import {ConfirmationDialogComponent} from './module/component/confirmation-dialog/confirmation-dialog.component';
-import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarConfig} from '@angular/material/snack-bar';
+import {CrossFormDialogComponent} from './module/component/cross-form/cross-form-dialog.component';
+import {
+    NGX_MAT_DATE_FORMATS,
+    NgxMatDateFormats,
+    NgxMatDatetimePickerModule
+} from '@angular-material-components/datetime-picker';
+import {NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NgxMatMomentModule} from '@angular-material-components/moment-adapter';
+import {environment} from '../environments/environment';
+import {NgxNumbersOnlyDirectiveModule} from "ngx-numbers-only-directive";
 
 @NgModule({
     declarations: [
         AppComponent,
         NoughtsComponent,
         CrossesComponent,
+        CrossFormDialogComponent,
         CrossesFilterComponent,
         FooterComponent,
         DataTableComponent,
@@ -64,11 +78,14 @@ import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
         MatProgressSpinnerModule,
         MatToolbarModule,
         MatDialogModule,
+        MatSelectModule,
+        MatBadgeModule,
         MatFormFieldModule,
         MatInputModule,
         MatDatepickerModule,
-        MatSelectModule,
-        MatBadgeModule,
+        NgxMatDatetimePickerModule,
+        NgxMatMomentModule,
+        NgxNumbersOnlyDirectiveModule,
         NgOptimizedImage
     ],
     providers: [
@@ -88,22 +105,40 @@ import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
             useClass: HashLocationStrategy
         },
         {
+            provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+            useValue: {useUtc: true}
+        },
+        {
+            provide: NGX_MAT_DATE_FORMATS,
+            useValue: {
+                parse: {
+                    dateInput: environment.datePickerFormat,
+                },
+                display: {
+                    dateInput: environment.datePickerFormat,
+                    monthYearLabel: 'MMM YYYY',
+                    dateA11yLabel: 'LL',
+                    monthYearA11yLabel: 'MMMM YYYY',
+                },
+            } as NgxMatDateFormats
+        },
+        {
             provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
             useValue: {
                 appearance: 'outline'
-            }
+            } as MatFormFieldDefaultOptions
         },
         {
             provide: MAT_DIALOG_DEFAULT_OPTIONS,
             useValue: {
                 autoFocus: false
-            }
+            } as MatDialogConfig
         },
         {
             provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
             useValue: {
                 duration: 3000
-            }
+            } as MatSnackBarConfig
         }
     ],
     bootstrap: [AppComponent]

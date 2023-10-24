@@ -16,6 +16,12 @@ export class CrossService {
         this.backendService.getPage<Cross>(`${environment.baseUrl}/${restUrl.crossesBase}`, pageMeta)
             .pipe(map(crosses => this.mapCrosses(crosses)))
 
+    public createCross = (cross: Cross) =>
+        this.backendService.post<void>(`${environment.baseUrl}/${restUrl.crossesBase}`, cross)
+
+    public updateCross = (cross: Cross) =>
+        this.backendService.put<Cross>(`${environment.baseUrl}/${restUrl.crossesBase}`, cross)
+
     public deleteCross = (id: number) =>
         this.backendService.delete(`${environment.baseUrl}/${restUrl.crossesBase}/${id}`)
 

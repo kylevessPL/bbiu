@@ -14,6 +14,7 @@ import {
 } from '../../component/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {CrossFormData, CrossFormDialogComponent} from "../../component/cross-form/cross-form-dialog.component";
 
 @Component({
     selector: 'app-crosses',
@@ -63,6 +64,10 @@ export class CrossesComponent implements OnInit {
             search: {
                 type: 'constant'
             }
+        },
+        {
+            name: 'Creation date',
+            key: 'creationDate'
         },
         {
             name: 'Expiry date',
@@ -121,11 +126,16 @@ export class CrossesComponent implements OnInit {
     }
 
     createCross = () => {
-        console.log('create');
+        const cross = {} as Cross;
+        this.performCreation(cross)
+            .pipe(first())
+            .subscribe((res: boolean) => res && this.createAndRefresh(cross));
     }
 
     editCross = (cross: Cross) => {
-        console.log('edit');
+        this.performEdition(cross)
+            .pipe(first())
+            .subscribe((res: boolean) => res && this.updateAndRefresh(cross));
     }
 
     deleteCross = (cross: Cross) => {
@@ -134,20 +144,21 @@ export class CrossesComponent implements OnInit {
             .subscribe((res: boolean) => res && this.deleteAndRefresh(cross));
     }
 
-    private deleteAndRefresh = (cross: Cross) => {
-        this.crossService.deleteCross(cross.id)
-            .pipe(first())
-            .subscribe(res => {
-                if (res?.ok) {
-                    this.forceRefresh.next();
-                    this.showDeletionNotification(cross.name);
-                }
-            });
-    }
+    private performCreation = (cross: Cross) => this.dialog.open(CrossFormDialogComponent, {
+        data: {
+            cross,
+            edit: false
+        } as CrossFormData,
+        disableClose: true
+    }).afterClosed()
 
-    private showDeletionNotification = (name: string) => {
-        this.snackBar.open(`${name} has been deleted`, 'OK');
-    }
+    private performEdition = (cross: Cross) => this.dialog.open(CrossFormDialogComponent, {
+        data: {
+            cross,
+            edit: true
+        } as CrossFormData,
+        disableClose: true
+    }).afterClosed()
 
     private confirmDeletion = (cross: Cross) => this.dialog.open(ConfirmationDialogComponent, {
         data: {
@@ -155,4 +166,41 @@ export class CrossesComponent implements OnInit {
             message: `Are you sure you want to delete ${cross.name}?`,
         } as ConfirmationData
     }).afterClosed()
+
+    private createAndRefresh = (cross: Cross) => {
+        this.crossService.createCross(cross)
+            .pipe(first())
+            .subscribe(res => {
+                if (res?.ok) {
+                    this.forceRefresh.next();
+                    this.showOperationNotification(cross.name, 'created');
+                }
+            });
+    }
+
+    private updateAndRefresh = (cross: Cross) => {
+        this.crossService.updateCross(cross)
+            .pipe(first())
+            .subscribe(res => {
+                if (res) {
+                    this.forceRefresh.next();
+                    this.showOperationNotification(cross.name, 'updated');
+                }
+            });
+    }
+
+    private deleteAndRefresh = (cross: Cross) => {
+        this.crossService.deleteCross(cross.id)
+            .pipe(first())
+            .subscribe(res => {
+                if (res?.ok) {
+                    this.forceRefresh.next();
+                    this.showOperationNotification(cross.name, 'deleted');
+                }
+            });
+    }
+
+    private showOperationNotification = (name: string, operation: 'created' | 'updated' | 'deleted') => {
+        this.snackBar.open(`${name} has been ${operation}`, 'OK');
+    }
 }

@@ -19,6 +19,7 @@ import {Page} from '../../model/page';
 import {PageMeta} from '../../model/page-meta';
 import {TableRowAction} from '../../model/table-row-action';
 import {Observable, Subscription, timer} from "rxjs";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-data-table',
@@ -26,6 +27,10 @@ import {Observable, Subscription, timer} from "rxjs";
     styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy, OnChanges {
+
+    constructor(private globalService: GlobalService) {
+    }
+
     @Input() columns: TableColumn[];
     @Input() pageSize = 10;
     @Input() sortColumnDefault: string;
@@ -49,9 +54,7 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy,
     sort: Sort = null;
 
     private forceRefreshSubscription: Subscription;
-
-    constructor(private globalService: GlobalService) {
-    }
+    protected readonly environment = environment;
 
     ngOnInit() {
         this.columnKeys = this.columnKeys.concat(this.columns.map(({key}) => key));

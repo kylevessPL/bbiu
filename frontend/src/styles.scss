@@ -16,7 +16,31 @@ body {
   display: inline-block !important;
 }
 
-.select-clear {
+.readonly-field {
+  input {
+    cursor: default;
+
+    &::placeholder {
+      color: rgba(0, 0, 0, .6);
+    }
+  }
+
+  &.ng-pristine {
+    .mat-form-field-infix {
+      top: -0.25em;
+    }
+
+    .mat-form-field-label-wrapper {
+      visibility: hidden;
+    }
+
+    .mat-form-field-outline-gap {
+      display: none;
+    }
+  }
+}
+
+.select-reset {
   min-width: calc(100% + 104px) !important;
 }
 
@@ -35,7 +59,7 @@ body {
   }
 }
 
-.mat-sort-header-content {
+.mat-sort-header-content, .mat-paginator-page-size-select, .mat-option-text {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
