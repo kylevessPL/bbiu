@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="form.valid && apply()">
     <h1 mat-dialog-title [align]="'center'">{{edit ? 'Edit cross' : 'Create cross'}}</h1>
     <div mat-dialog-content [align]="'center'">
-        <div *ngIf="!edit" class="field-row">
+        <div *ngIf="!edit" class="form-field-row">
             <mat-form-field class="form-field">
                 <mat-label>Name</mat-label>
                 <input matInput type="text" [maxLength]="nameMaxLength" formControlName="name">
@@ -22,7 +22,7 @@
                 <ngx-mat-datetime-picker #expiryDatePicker></ngx-mat-datetime-picker>
             </mat-form-field>
         </div>
-        <div *ngIf="edit" class="field-row">
+        <div *ngIf="edit" class="form-field-row">
             <mat-form-field class="form-field">
                 <mat-label>Id</mat-label>
                 <input matInput type="number" formControlName="id">
@@ -32,7 +32,7 @@
                 <input matInput type="text" formControlName="name">
             </mat-form-field>
         </div>
-        <div *ngIf="edit" class="field-row">
+        <div *ngIf="edit" class="form-field-row">
             <mat-form-field class="form-field">
                 <mat-label>Creation date</mat-label>
                 <input matInput formControlName="creationDate">
@@ -51,7 +51,7 @@
                 <ngx-mat-datetime-picker #expiryDatePicker></ngx-mat-datetime-picker>
             </mat-form-field>
         </div>
-        <div class="field-row">
+        <div class="form-field-row">
             <mat-form-field class="form-field">
                 <mat-label>Comment</mat-label>
                 <input matInput type="text" [maxLength]="commentMaxLength" formControlName="comment">
@@ -66,7 +66,7 @@
                 <mat-error *ngIf="isNumberMaxError('angle')">{{numberMaxErrorMessage(angleMax)}}</mat-error>
             </mat-form-field>
         </div>
-        <div class="field-row">
+        <div class="form-field-row">
             <mat-form-field class="form-field">
                 <mat-label>Weight</mat-label>
                 <input matInput NgxNumbersOnly type="number" [min]="weightMin" [max]="weightMax"
@@ -82,7 +82,7 @@
                 <mat-error *ngIf="isNumberMinError('beams')">{{numberMinErrorMessage(beamsMin)}}</mat-error>
             </mat-form-field>
         </div>
-        <div class="field-row">
+        <div class="form-field-row">
             <mat-form-field class="form-field">
                 <mat-label>Material</mat-label>
                 <mat-select formControlName="material">

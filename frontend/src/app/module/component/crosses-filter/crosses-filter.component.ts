@@ -1,6 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Material} from '../../model/material.enum';
+import ValidationUtils from '../../util/validation-utils';
+import {validation} from '../../model/validation';
 
 @Component({
     selector: 'app-crosses-filter',
@@ -14,17 +16,26 @@ export class CrossesFilterComponent implements OnInit {
     material = Material;
     materialKeys = Object.keys(this.material);
 
+    protected readonly idMin = validation.idMin;
+    protected readonly nameMaxLength = validation.nameMaxLength;
+    protected readonly commentMaxLength = validation.commentMaxLength;
+    protected readonly angleMin = validation.angleMin;
+    protected readonly angleMax = validation.angleMax;
+    protected readonly weightMin = validation.weightMin;
+    protected readonly weightMax = validation.weightMax;
+    protected readonly beamsMin = validation.beamsMin;
+
     constructor(private fb: FormBuilder) {
     }
 
     ngOnInit() {
         this.form = this.fb.group({
-            id: null,
-            name: null,
-            comment: null,
-            angle: null,
-            weight: null,
-            beams: null,
+            id: [null, Validators.min(this.idMin)],
+            name: [null, Validators.maxLength(this.nameMaxLength)],
+            comment: [null, Validators.maxLength(this.commentMaxLength)],
+            angle: [null, [Validators.min(this.angleMin), Validators.max(this.angleMax)]],
+            weight: [null, [Validators.min(this.weightMin), Validators.max(this.weightMax)]],
+            beams: [null, Validators.min(this.beamsMin)],
             material: new FormControl(this.materialKeys, {nonNullable: true})
         });
     }
@@ -49,4 +60,16 @@ export class CrossesFilterComponent implements OnInit {
             this.clearField(field);
         }
     }
+
+    isNumberMinError = (field: string) => ValidationUtils.isNumberMinError(this.form, field);
+
+    isNumberMaxError = (field: string) => ValidationUtils.isNumberMaxError(this.form, field);
+
+    isTextMaxError = (field: string) => ValidationUtils.isTextMaxError(this.form, field);
+
+    numberMinErrorMessage = (min: number) => ValidationUtils.numberMinErrorMessage(min);
+
+    numberMaxErrorMessage = (max: number) => ValidationUtils.numberMaxErrorMessage(max);
+
+    textMaxErrorMessage = (maxLength: number) => ValidationUtils.textMaxErrorMessage(maxLength);
 }

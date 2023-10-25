@@ -1,26 +1,31 @@
-<form autocomplete="off" [formGroup]="form" (ngSubmit)="apply()" class="flex flex-wrap">
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="form.valid && apply()" class="flex flex-wrap">
     <div>
         <mat-form-field class="form-field">
             <mat-label>Id</mat-label>
-            <input matInput aria-autocomplete="none" type="number" min="1" formControlName="id" id="id-search">
+            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" [min]="idMin" formControlName="id"
+                   id="id-search">
             <button matSuffix mat-icon-button type="button" (click)="clearField('id', $event)">
                 <mat-icon>close</mat-icon>
             </button>
+            <mat-error *ngIf="isNumberMinError('id')">{{numberMinErrorMessage(idMin)}}</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>Name</mat-label>
-            <input matInput aria-autocomplete="none" type="text" maxlength="30" formControlName="name" id="name-search">
+            <input matInput aria-autocomplete="none" type="text" [maxLength]="nameMaxLength"
+                   formControlName="name" id="name-search">
             <button matSuffix mat-icon-button type="button" (click)="clearField('name', $event)">
                 <mat-icon>close</mat-icon>
             </button>
+            <mat-error *ngIf="isTextMaxError('name')">{{textMaxErrorMessage(nameMaxLength)}}</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>Comment</mat-label>
-            <input matInput aria-autocomplete="none" type="text" maxlength="128" formControlName="comment"
-                   id="comment-search">
+            <input matInput aria-autocomplete="none" type="text" [maxLength]="commentMaxLength"
+                   formControlName="comment" id="comment-search">
             <button matSuffix mat-icon-button type="button" (click)="clearField('comment', $event)">
                 <mat-icon>close</mat-icon>
             </button>
+            <mat-error *ngIf="isTextMaxError('comment')">{{textMaxErrorMessage(commentMaxLength)}}</mat-error>
         </mat-form-field>
         <div class="filter-btns">
             <button type="reset" mat-stroked-button color="primary">Reset</button>
@@ -30,26 +35,32 @@
     <div>
         <mat-form-field class="form-field">
             <mat-label>Angle</mat-label>
-            <input matInput aria-autocomplete="none" type="number" min="0" max="45" formControlName="angle"
-                   id="angle-search">
+            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" [min]="angleMin" [max]="angleMax"
+                   formControlName="angle" id="angle-search">
             <button matSuffix mat-icon-button type="button" (click)="clearField('angle', $event)">
                 <mat-icon>close</mat-icon>
             </button>
+            <mat-error *ngIf="isNumberMinError('angle')">{{numberMinErrorMessage(angleMin)}}</mat-error>
+            <mat-error *ngIf="isNumberMaxError('angle')">{{numberMaxErrorMessage(angleMax)}}</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>Weight</mat-label>
-            <input matInput aria-autocomplete="none" type="number" min="1" max="10" formControlName="weight"
-                   id="weight-search">
+            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" [min]="weightMin" [max]="weightMax"
+                   formControlName="weight" id="weight-search">
             <button matSuffix mat-icon-button type="button" (click)="clearField('weight', $event)">
                 <mat-icon>close</mat-icon>
             </button>
+            <mat-error *ngIf="isNumberMinError('weight')">{{numberMinErrorMessage(weightMin)}}</mat-error>
+            <mat-error *ngIf="isNumberMaxError('weight')">{{numberMaxErrorMessage(weightMax)}}</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>Beams</mat-label>
-            <input matInput aria-autocomplete="none" type="number" min="1" formControlName="beams" id="beams-search">
+            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" [min]="beamsMin"
+                   formControlName="beams" id="beams-search">
             <button matSuffix mat-icon-button type="button" (click)="clearField('beams', $event)">
                 <mat-icon>close</mat-icon>
             </button>
+            <mat-error *ngIf="isNumberMinError('beams')">{{numberMinErrorMessage(beamsMin)}}</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>Material</mat-label>
