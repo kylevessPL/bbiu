@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import pl.piasta.bbiu.model.Cross;
 
 @And({
+        @Spec(path = "id", spec = Equal.class),
         @Spec(path = "name", spec = LikeIgnoreCase.class),
         @Spec(path = "comment", spec = LikeIgnoreCase.class),
         @Spec(path = "angle", spec = Equal.class),
