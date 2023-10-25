@@ -11,10 +11,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     intercept = (request: HttpRequest<any>, next: HttpHandler) => next.handle(request).pipe(
         catchError((error: HttpErrorResponse) => {
-            if (error.url && (error.status !== 401 || error.url.endsWith('/auth'))) {
+            if (error.url && error.status !== 401 && error.status !== 409) {
                 this.globalService.httpErrorStatus.next(error);
             }
             return throwError(() => error);
         })
-    );
+    )
 }

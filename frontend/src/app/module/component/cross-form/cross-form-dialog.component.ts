@@ -1,8 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Material} from '../../model/material.enum';
 import {Cross} from '../../model/cross';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import EnumUtils from '../../util/enum-utils';
 import {DateFormatterPipe} from '../../pipe/date-formatter.pipe';
 import ValidationUtils from '../../util/validation-utils';
@@ -19,11 +19,11 @@ import {Moment} from 'moment';
 export class CrossFormDialogComponent implements OnInit {
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: CrossFormData,
-                private dialogRef: MatDialogRef<CrossFormDialogComponent>,
                 private dateFormatter: DateFormatterPipe,
                 private fb: FormBuilder) {
     }
 
+    export = new EventEmitter<Cross>();
     edit: boolean;
     form: FormGroup;
     material = Material;
@@ -84,7 +84,7 @@ export class CrossFormDialogComponent implements OnInit {
     apply = () => {
         const cross = this.applyData();
         this.pruneData(cross);
-        this.dialogRef.close(cross);
+        this.export.emit(cross);
     }
 
     private applyData() {

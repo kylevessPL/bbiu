@@ -12,10 +12,10 @@ import {
     ConfirmationData,
     ConfirmationDialogComponent
 } from '../../component/confirmation-dialog/confirmation-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {CrossFormData, CrossFormDialogComponent} from '../../component/cross-form/cross-form-dialog.component';
-import {ErrorResponse} from "../../model/error-response";
+import {ErrorResponse} from '../../model/error-response';
 
 @Component({
     selector: 'app-crosses',
@@ -131,59 +131,59 @@ export class CrossesComponent implements OnInit {
     }
 
     createCross = () => {
-        this.performCreation()
-            .pipe(first())
-            .subscribe((res: Cross) => res && this.createAndRefresh(res));
+        const dialog = this.dialog.open(CrossFormDialogComponent, {
+            disableClose: true
+        });
+        const data = this.dataOperationEvent(dialog);
+        data.subscribe(res => this.createAndRefresh(res, () => {
+            dialog.close();
+            data.unsubscribe();
+        }));
     }
 
     editCross = (cross: Cross) => {
-        this.performEdition(cross)
-            .pipe(first())
-            .subscribe((res: Cross) => res && this.updateAndRefresh(res));
+        const dialog = this.dialog.open(CrossFormDialogComponent, {
+            data: {
+                cross,
+                edit: true
+            } as CrossFormData,
+            disableClose: true
+        });
+        const data = this.dataOperationEvent(dialog);
+        data.subscribe(res => this.updateAndRefresh(res, () => {
+            dialog.close();
+            data.unsubscribe();
+        }));
     }
 
     deleteCross = (cross: Cross) => {
-        this.confirmDeletion(cross)
+        this.dialog.open(ConfirmationDialogComponent, {
+            data: {
+                title: 'Cross deletion',
+                message: `Are you sure you want to delete ${cross.name}?`,
+            } as ConfirmationData
+        }).afterClosed()
             .pipe(first())
             .subscribe((res: boolean) => res && this.deleteAndRefresh(cross));
     }
 
-    private performCreation = () => this.dialog.open(CrossFormDialogComponent, {
-        disableClose: true
-    }).afterClosed()
-
-    private performEdition = (cross: Cross) => this.dialog.open(CrossFormDialogComponent, {
-        data: {
-            cross,
-            edit: true
-        } as CrossFormData,
-        disableClose: true
-    }).afterClosed()
-
-    private confirmDeletion = (cross: Cross) => this.dialog.open(ConfirmationDialogComponent, {
-        data: {
-            title: 'Cross deletion',
-            message: `Are you sure you want to delete ${cross.name}?`,
-        } as ConfirmationData
-    }).afterClosed()
-
-    private createAndRefresh = (cross: Cross) => {
+    private createAndRefresh = (cross: Cross, onSuccess: () => void) => {
         this.crossService.createCross(cross)
             .pipe(first())
             .subscribe({
-                next: res => res?.ok && this.handleOperationSuccess(cross.name, 'created'),
-                error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationConflict(err.error)
+                next: res => res?.ok && this.handleOperationSuccess(cross.name, 'created', onSuccess),
+                error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationFailure(err.error)
             });
     }
 
-    private updateAndRefresh = (cross: Cross) => {
+    private updateAndRefresh = (cross: Cross, onSuccess: () => void) => {
         const {id, name} = cross;
         cross.id = cross.name = cross.creationDate = undefined;
         this.crossService.updateCross(id, cross)
             .pipe(first())
             .subscribe({
-                next: res => res?.ok && this.handleOperationSuccess(name, 'updated'),
-                error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationConflict(err.error)
+                next: res => res?.ok && this.handleOperationSuccess(name, 'updated', onSuccess),
+                error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationFailure(err.error)
             });
     }
 
@@ -193,13 +193,24 @@ export class CrossesComponent implements OnInit {
             .subscribe(res => res?.ok && this.handleOperationSuccess(cross.name, 'deleted'));
     }
 
-    private handleOperationSuccess(name: string, operation: 'created' | 'updated' | 'deleted') {
+    private dataOperationEvent(dialog: MatDialogRef<CrossFormDialogComponent, boolean>) {
+        const data = dialog.componentInstance.export;
+        dialog.afterClosed().pipe(first()).subscribe(res => res && this.snackBar.dismiss());
+        return data;
+    }
+
+    private handleOperationSuccess(name: string, operation: 'created' | 'updated' | 'deleted', onSuccess: () => void = () => {
+    }) {
+        onSuccess();
         this.forceRefresh.next();
         this.showOperationNotification(name, operation);
     }
 
-    private handleOperationConflict(error: ErrorResponse) {
-        this.snackBar.open(error.message, 'OK', {duration: 5000});
+    private handleOperationFailure(error: ErrorResponse) {
+        this.snackBar.open(error.message, 'OK', {
+            duration: 5000,
+            panelClass: ['mat-toolbar', 'mat-warn']
+        });
     }
 
     private showOperationNotification = (name: string, operation: 'created' | 'updated' | 'deleted') => {

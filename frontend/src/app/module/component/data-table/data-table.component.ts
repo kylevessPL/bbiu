@@ -18,8 +18,8 @@ import {TableColumn} from '../../model/table-column';
 import {Page} from '../../model/page';
 import {PageMeta} from '../../model/page-meta';
 import {TableRowAction} from '../../model/table-row-action';
-import {Observable, Subscription, timer} from "rxjs";
-import {environment} from "../../../../environments/environment";
+import {Observable, Subscription, timer} from 'rxjs';
+import {environment} from '../../../../environments/environment';
 
 @Component({
     selector: 'app-data-table',
@@ -38,7 +38,7 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy,
     @Input() rowActions: TableRowAction<T>[] = [];
     @Input() data: T;
     @Input() filter: Record<string, any>;
-    @Input() forceRefresh = new Observable<void>();
+    @Input() forceRefresh: Observable<void>;
     @Input() error: HttpErrorResponse;
     @Output() pageEvent = new EventEmitter<PageMeta>();
 
