@@ -44,7 +44,7 @@ import {
     NgxMatDateFormats,
     NgxMatDatetimePickerModule
 } from '@angular-material-components/datetime-picker';
-import {NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, NgxMatMomentModule} from '@angular-material-components/moment-adapter';
+import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {environment} from '../environments/environment';
 import {NgxNumbersOnlyDirectiveModule} from "ngx-numbers-only-directive";
 
@@ -103,10 +103,6 @@ import {NgxNumbersOnlyDirectiveModule} from "ngx-numbers-only-directive";
         {
             provide: LocationStrategy,
             useClass: HashLocationStrategy
-        },
-        {
-            provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-            useValue: {useUtc: true}
         },
         {
             provide: NGX_MAT_DATE_FORMATS,

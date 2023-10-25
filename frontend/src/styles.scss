@@ -25,7 +25,7 @@ body {
     }
   }
 
-  &.ng-pristine {
+  &:not(.ng-filled) {
     .mat-form-field-infix {
       top: -0.25em;
     }

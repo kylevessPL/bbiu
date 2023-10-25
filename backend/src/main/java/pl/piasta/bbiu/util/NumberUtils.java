@@ -1,4 +1,4 @@
-package pl.piasta.bbiu.common;
+package pl.piasta.bbiu.util;
 
 import lombok.experimental.UtilityClass;
 

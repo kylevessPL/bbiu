@@ -14,7 +14,8 @@ import {
 } from '../../component/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {CrossFormData, CrossFormDialogComponent} from "../../component/cross-form/cross-form-dialog.component";
+import {CrossFormData, CrossFormDialogComponent} from '../../component/cross-form/cross-form-dialog.component';
+import {ErrorResponse} from "../../model/error-response";
 
 @Component({
     selector: 'app-crosses',
@@ -74,6 +75,10 @@ export class CrossesComponent implements OnInit {
             key: 'expiryDate'
         },
         {
+            name: 'Expired',
+            key: 'expired'
+        },
+        {
             name: 'Comment',
             key: 'comment',
             search: {
@@ -126,16 +131,15 @@ export class CrossesComponent implements OnInit {
     }
 
     createCross = () => {
-        const cross = {} as Cross;
-        this.performCreation(cross)
+        this.performCreation()
             .pipe(first())
-            .subscribe((res: boolean) => res && this.createAndRefresh(cross));
+            .subscribe((res: Cross) => res && this.createAndRefresh(res));
     }
 
     editCross = (cross: Cross) => {
         this.performEdition(cross)
             .pipe(first())
-            .subscribe((res: boolean) => res && this.updateAndRefresh(cross));
+            .subscribe((res: Cross) => res && this.updateAndRefresh(res));
     }
 
     deleteCross = (cross: Cross) => {
@@ -144,11 +148,7 @@ export class CrossesComponent implements OnInit {
             .subscribe((res: boolean) => res && this.deleteAndRefresh(cross));
     }
 
-    private performCreation = (cross: Cross) => this.dialog.open(CrossFormDialogComponent, {
-        data: {
-            cross,
-            edit: false
-        } as CrossFormData,
+    private performCreation = () => this.dialog.open(CrossFormDialogComponent, {
         disableClose: true
     }).afterClosed()
 
@@ -170,34 +170,36 @@ export class CrossesComponent implements OnInit {
     private createAndRefresh = (cross: Cross) => {
         this.crossService.createCross(cross)
             .pipe(first())
-            .subscribe(res => {
-                if (res?.ok) {
-                    this.forceRefresh.next();
-                    this.showOperationNotification(cross.name, 'created');
-                }
+            .subscribe({
+                next: res => res?.ok && this.handleOperationSuccess(cross.name, 'created'),
+                error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationConflict(err.error)
             });
     }
 
     private updateAndRefresh = (cross: Cross) => {
-        this.crossService.updateCross(cross)
+        const {id, name} = cross;
+        cross.id = cross.name = cross.creationDate = undefined;
+        this.crossService.updateCross(id, cross)
             .pipe(first())
-            .subscribe(res => {
-                if (res) {
-                    this.forceRefresh.next();
-                    this.showOperationNotification(cross.name, 'updated');
-                }
+            .subscribe({
+                next: res => res?.ok && this.handleOperationSuccess(name, 'updated'),
+                error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationConflict(err.error)
             });
     }
 
     private deleteAndRefresh = (cross: Cross) => {
         this.crossService.deleteCross(cross.id)
             .pipe(first())
-            .subscribe(res => {
-                if (res?.ok) {
-                    this.forceRefresh.next();
-                    this.showOperationNotification(cross.name, 'deleted');
-                }
-            });
+            .subscribe(res => res?.ok && this.handleOperationSuccess(cross.name, 'deleted'));
+    }
+
+    private handleOperationSuccess(name: string, operation: 'created' | 'updated' | 'deleted') {
+        this.forceRefresh.next();
+        this.showOperationNotification(name, operation);
+    }
+
+    private handleOperationConflict(error: ErrorResponse) {
+        this.snackBar.open(error.message, 'OK', {duration: 5000});
     }
 
     private showOperationNotification = (name: string, operation: 'created' | 'updated' | 'deleted') => {

@@ -1,3 +1,3 @@
-package pl.piasta.bbiu.common;
+package pl.piasta.bbiu.config;
 
 public record CreatedResource(long id) {}

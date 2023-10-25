@@ -1,11 +1,6 @@
 import {FormGroup} from '@angular/forms';
 
-export default class Utils {
-    static getEnumKey(myEnum: any, enumValue: number | string): string {
-        const keys = Object.keys(myEnum).filter(key => myEnum[key] === enumValue);
-        return keys.length > 0 ? keys[0] : undefined;
-    }
-
+export default class ValidationUtils {
     static isRequiredError = (form: FormGroup, field: string) => form.get(field).hasError('required');
 
     static isNumberMinError = (form: FormGroup, field: string) =>

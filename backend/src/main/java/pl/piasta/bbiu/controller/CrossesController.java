@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import pl.piasta.bbiu.common.CreatedResource;
+import pl.piasta.bbiu.config.CreatedResource;
 import pl.piasta.bbiu.domain.dto.CreateCrossDto;
 import pl.piasta.bbiu.domain.dto.UpdateCrossDto;
 import pl.piasta.bbiu.domain.query.CrossProjection;

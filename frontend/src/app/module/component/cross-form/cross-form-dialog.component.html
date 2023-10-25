@@ -1,14 +1,16 @@
 <form [formGroup]="form" (ngSubmit)="form.valid && apply()">
     <h1 mat-dialog-title [align]="'center'">{{edit ? 'Edit cross' : 'Create cross'}}</h1>
     <div mat-dialog-content [align]="'center'">
-        <div *ngIf="!edit">
+        <div *ngIf="!edit" class="field-row">
             <mat-form-field class="form-field">
                 <mat-label>Name</mat-label>
                 <input matInput type="text" [maxLength]="nameMaxLength" formControlName="name">
                 <mat-error *ngIf="isRequiredError('name')">{{requiredErrorMessage()}}</mat-error>
                 <mat-error *ngIf="isTextMaxError('name')">{{textMaxErrorMessage(nameMaxLength)}}</mat-error>
             </mat-form-field>
-            <mat-form-field class="form-field readonly-field" floatLabel="always">
+            <mat-form-field class="form-field readonly-field"
+                            floatLabel="always"
+                            [class.ng-filled]="fieldFilled('expiryDate')">
                 <mat-label>Expiry date</mat-label>
                 <input matInput
                        placeholder="Expiry date"
@@ -20,7 +22,7 @@
                 <ngx-mat-datetime-picker #expiryDatePicker></ngx-mat-datetime-picker>
             </mat-form-field>
         </div>
-        <div *ngIf="edit">
+        <div *ngIf="edit" class="field-row">
             <mat-form-field class="form-field">
                 <mat-label>Id</mat-label>
                 <input matInput type="number" formControlName="id">
@@ -30,25 +32,26 @@
                 <input matInput type="text" formControlName="name">
             </mat-form-field>
         </div>
-        <div *ngIf="edit">
+        <div *ngIf="edit" class="field-row">
             <mat-form-field class="form-field">
                 <mat-label>Creation date</mat-label>
                 <input matInput formControlName="creationDate">
                 <mat-datepicker-toggle matSuffix disabled></mat-datepicker-toggle>
             </mat-form-field>
-            <mat-form-field class="form-field readonly-field" floatLabel="always">
+            <mat-form-field class="form-field readonly-field"
+                            floatLabel="always"
+                            [class.ng-filled]="fieldFilled('expiryDate')">
                 <mat-label>Expiry date</mat-label>
                 <input matInput
                        placeholder="Expiry date"
                        [ngxMatDatetimePicker]="expiryDatePicker"
-                       [min]="dateNow"
                        readonly
                        formControlName="expiryDate">
                 <mat-datepicker-toggle matSuffix [for]="expiryDatePicker"></mat-datepicker-toggle>
                 <ngx-mat-datetime-picker #expiryDatePicker></ngx-mat-datetime-picker>
             </mat-form-field>
         </div>
-        <div>
+        <div class="field-row">
             <mat-form-field class="form-field">
                 <mat-label>Comment</mat-label>
                 <input matInput type="text" [maxLength]="commentMaxLength" formControlName="comment">
@@ -63,7 +66,7 @@
                 <mat-error *ngIf="isNumberMaxError('angle')">{{numberMaxErrorMessage(angleMax)}}</mat-error>
             </mat-form-field>
         </div>
-        <div>
+        <div class="field-row">
             <mat-form-field class="form-field">
                 <mat-label>Weight</mat-label>
                 <input matInput NgxNumbersOnly type="number" [min]="weightMin" [max]="weightMax"
@@ -79,18 +82,20 @@
                 <mat-error *ngIf="isNumberMinError('beams')">{{numberMinErrorMessage(beamsMin)}}</mat-error>
             </mat-form-field>
         </div>
-        <mat-form-field class="form-field">
-            <mat-label>Material</mat-label>
-            <mat-select formControlName="material">
-                <mat-option *ngFor="let key of materialKeys" [value]="key">
-                    {{material[key]}}
-                </mat-option>
-            </mat-select>
-            <mat-error *ngIf="isRequiredError('material')">{{requiredErrorMessage()}}</mat-error>
-        </mat-form-field>
+        <div class="field-row">
+            <mat-form-field class="form-field">
+                <mat-label>Material</mat-label>
+                <mat-select formControlName="material">
+                    <mat-option *ngFor="let key of materialKeys" [value]="key">
+                        {{material[key]}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="isRequiredError('material')">{{requiredErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
     </div>
     <div mat-dialog-actions [align]="'center'">
         <button mat-flat-button type="submit" color="warn">Save</button>
-        <button mat-flat-button [mat-dialog-close]="false">Cancel</button>
+        <button mat-flat-button mat-dialog-close>Cancel</button>
     </div>
 </form>

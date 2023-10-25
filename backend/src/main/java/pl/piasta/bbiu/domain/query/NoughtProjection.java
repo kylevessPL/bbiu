@@ -10,7 +10,7 @@ public interface NoughtProjection {
 
     String getName();
 
-    @Value("#{T(pl.piasta.bbiu.common.NumberUtils).ceil(target.radius)}")
+    @Value("#{T(pl.piasta.bbiu.util.NumberUtils).ceil(target.radius)}")
     double getRadius();
 
     Color getColor();

@@ -1,5 +1,5 @@
 export enum Material {
-    WOOD = 'Metal',
-    METAL = 'Wood',
+    WOOD = 'Wood',
+    METAL = 'Metal',
     PLASTIC = 'Plastic'
 }

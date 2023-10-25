@@ -16,12 +16,12 @@ export class BackendService {
         .get<T>(url, {params: this.getPageMetaParams(pageMeta)})
         .pipe(share())
 
-    public post = <T>(url: string, body: object) => this.httpClient
-        .post<T>(url, body, {observe: 'response'})
+    public post = (url: string, body: object) => this.httpClient
+        .post<void>(url, body, {observe: 'response'})
         .pipe(share())
 
-    public put = <T>(url: string, body: object) => this.httpClient
-        .put<T>(url, body)
+    public put = (url: string, body: object) => this.httpClient
+        .put<void>(url, body, {observe: 'response'})
         .pipe(share())
 
     public delete = (url: string) => this.httpClient

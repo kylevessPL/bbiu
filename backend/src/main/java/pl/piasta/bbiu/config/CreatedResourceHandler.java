@@ -1,4 +1,4 @@
-package pl.piasta.bbiu.common;
+package pl.piasta.bbiu.config;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
