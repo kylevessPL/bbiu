@@ -1,3 +1,4 @@
+# noinspection SpringBootApplicationYaml
 cors:
   maxAge: 3600
   allowedMethods:
@@ -32,5 +33,3 @@ server:
   error:
     include-binding-errors: always
     include-message: always
-
-
