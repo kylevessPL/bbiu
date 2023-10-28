@@ -14,13 +14,15 @@ export class CrossService {
 
     public getAllCrosses = (pageMeta?: PageMeta) =>
         this.backendService.getPage<Cross>(`${environment.baseUrl}/${restUrl.crossesBase}`, pageMeta)
-            .pipe(map(crosses => this.mapCrosses(crosses)))
+            .pipe(map(items => this.mapCrosses(items)))
 
     public createCross = (cross: Cross) =>
-        this.backendService.post(`${environment.baseUrl}/${restUrl.crossesBase}`, cross)
+        this.backendService.post<Cross>(`${environment.baseUrl}/${restUrl.crossesBase}`, cross)
+            .pipe(map(item => this.mapCross(item)))
 
     public updateCross = (id: number, cross: Cross) =>
-        this.backendService.put(`${environment.baseUrl}/${restUrl.crossesBase}/${id}`, cross)
+        this.backendService.put<Cross>(`${environment.baseUrl}/${restUrl.crossesBase}/${id}`, cross)
+            .pipe(map(item => this.mapCross(item)))
 
     public deleteCross = (id: number) =>
         this.backendService.delete(`${environment.baseUrl}/${restUrl.crossesBase}/${id}`)

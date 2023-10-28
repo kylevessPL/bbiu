@@ -13,12 +13,13 @@
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>Comment</mat-label>
-            <input matInput type="text" [maxLength]="commentMaxLength" formControlName="comment">
+            <input matInput aria-autocomplete="none" type="text" [maxLength]="commentMaxLength"
+                   formControlName="comment">
             <mat-error *ngIf="isTextMaxError('comment')">{{textMaxErrorMessage(commentMaxLength)}}</mat-error>
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>Radius</mat-label>
-            <input matInput NgxNumbersOnly type="text" inputmode="decimal" allowDecimals="true"
+            <input matInput aria-autocomplete="none" NgxNumbersOnly type="text" inputmode="decimal" allowDecimals="true"
                    formControlName="radius">
             <mat-error *ngIf="isRequiredError('radius')">{{requiredErrorMessage()}}</mat-error>
             <mat-error *ngIf="isNumberMinError('radius')">{{numberMinErrorMessage(radiusMin)}}</mat-error>

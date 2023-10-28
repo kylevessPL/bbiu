@@ -1,4 +1,4 @@
-package pl.piasta.bbiu.domain.query;
+package pl.piasta.bbiu.domain.projection;
 
 import java.time.Instant;
 

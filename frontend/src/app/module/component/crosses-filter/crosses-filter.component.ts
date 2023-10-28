@@ -50,9 +50,9 @@ export class CrossesFilterComponent implements OnInit {
         this.filterEvent.emit(filter);
     }
 
-    clearField = (field: string, $event: Event = null) => {
+    clearField = (field: string, event?: Event) => {
         this.form.get(field).reset();
-        $event?.stopPropagation();
+        event?.stopPropagation();
     }
 
     selectClosed = (field: string) => {

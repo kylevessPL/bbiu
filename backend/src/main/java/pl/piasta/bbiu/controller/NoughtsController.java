@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import pl.piasta.bbiu.config.CreatedResource;
 import pl.piasta.bbiu.domain.dto.CreateNoughtDto;
 import pl.piasta.bbiu.domain.dto.UpdateNoughtDto;
-import pl.piasta.bbiu.domain.query.NoughtBasicProjection;
-import pl.piasta.bbiu.domain.query.NoughtProjection;
+import pl.piasta.bbiu.domain.projection.NoughtBasicProjection;
+import pl.piasta.bbiu.domain.projection.NoughtProjection;
 import pl.piasta.bbiu.domain.service.NoughtsManager;
 
 import java.util.List;
@@ -38,9 +37,8 @@ class NoughtsController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public CreatedResource createNought(@Valid @RequestBody CreateNoughtDto dto) {
-        var id = manager.create(dto);
-        return new CreatedResource(id);
+    public NoughtProjection createNought(@Valid @RequestBody CreateNoughtDto dto) {
+        return manager.create(dto);
     }
 
     @GetMapping("/{id}")
@@ -49,9 +47,8 @@ class NoughtsController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(NO_CONTENT)
-    public void updateNought(@PathVariable long id, @Valid @RequestBody UpdateNoughtDto dto) {
-        manager.update(id, dto);
+    public NoughtProjection updateNought(@PathVariable long id, @Valid @RequestBody UpdateNoughtDto dto) {
+        return manager.update(id, dto);
     }
 
     @DeleteMapping("/{id}")

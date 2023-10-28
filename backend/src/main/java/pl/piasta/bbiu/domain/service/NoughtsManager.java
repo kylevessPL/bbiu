@@ -2,8 +2,8 @@ package pl.piasta.bbiu.domain.service;
 
 import pl.piasta.bbiu.domain.dto.CreateNoughtDto;
 import pl.piasta.bbiu.domain.dto.UpdateNoughtDto;
-import pl.piasta.bbiu.domain.query.NoughtBasicProjection;
-import pl.piasta.bbiu.domain.query.NoughtProjection;
+import pl.piasta.bbiu.domain.projection.NoughtBasicProjection;
+import pl.piasta.bbiu.domain.projection.NoughtProjection;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ public interface NoughtsManager {
 
     List<NoughtBasicProjection> getAll();
 
-    long create(CreateNoughtDto dto);
+    NoughtProjection create(CreateNoughtDto dto);
 
-    void update(long id, UpdateNoughtDto dto);
+    NoughtProjection update(long id, UpdateNoughtDto dto);
 
     void delete(long id);
 }

@@ -47,7 +47,13 @@ export class NoughtsComponent implements OnInit {
         .subscribe(noughts => this.data = noughts)
 
     switchCurrent = (nought: Nought = undefined) => {
-        this.current = nought;
+        if (nought && !nought.color) {
+            this.noughtService.getNought(nought.id)
+                .pipe(first())
+                .subscribe(res => this.switchCurrent(res));
+        } else {
+            this.current = nought;
+        }
     }
 
     saveNought = (nought: Nought) => {
@@ -70,44 +76,53 @@ export class NoughtsComponent implements OnInit {
     }
 
     private createAndRefresh = (nought: Nought) => {
-        const onSuccess = () => {
-            this.data.push(nought);
-            this.switchCurrent(nought);
+        const onSuccess = (item: Nought) => {
+            this.addDataItem(item);
+            this.switchCurrent(item);
         };
         this.noughtService.createNought(nought)
             .pipe(first())
             .subscribe({
-                next: res => res?.ok && this.handleOperationSuccess(nought.name, 'created', onSuccess),
+                next: res => res && this.handleOperationSuccess(res, 'created', onSuccess),
                 error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationFailure(err.error)
             });
     }
 
     private updateAndRefresh = (nought: Nought) => {
         nought.id = nought.name = nought.creationDate = undefined;
-        const onSuccess = () => {
-            const index = this.data.indexOf(this.current);
-            this.data[index] = nought;
-            this.switchCurrent(nought);
-        };
+        const onSuccess = (item: Nought) => this.switchCurrent(item);
         this.noughtService.updateNought(this.current.id, nought)
             .pipe(first())
-            .subscribe(res => res?.ok && this.handleOperationSuccess(this.current.name, 'updated', onSuccess));
+            .subscribe(res => res && this.handleOperationSuccess(res, 'updated', onSuccess));
     }
 
     private deleteAndRefresh = () => {
         const onSuccess = () => {
-            this.data = this.data.filter(item => item !== this.current);
+            this.removeDataItem();
             this.switchCurrent();
         };
         this.noughtService.deleteNought(this.current.id)
             .pipe(first())
-            .subscribe(res => res?.ok && this.handleOperationSuccess(this.current.name, 'deleted', onSuccess));
+            .subscribe(res => res?.ok && this.handleOperationSuccess(this.current, 'deleted', onSuccess));
     }
 
-    private handleOperationSuccess = (name: string, operation: 'created' | 'updated' | 'deleted', onSuccess: () => void = () => {
-    }) => {
-        onSuccess();
-        this.globalService.showSuccessfulOperationNotification(name, operation);
+    private addDataItem = (nought: Nought) => {
+        const item: Nought = {
+            ...nought,
+            comment: undefined,
+            radius: undefined,
+            color: undefined
+        };
+        this.data.push(item);
+    }
+
+    private removeDataItem = () => {
+        this.data = this.data.filter(item => item.id !== this.current.id);
+    }
+
+    private handleOperationSuccess = (nought: Nought, operation: 'created' | 'updated' | 'deleted', onSuccess: (nought: Nought) => void) => {
+        onSuccess(nought);
+        this.globalService.showSuccessfulOperationNotification(nought.name, operation);
     }
 
     private handleOperationFailure = (error: ErrorResponse) => this.globalService.showFailedOperationNotification(error);

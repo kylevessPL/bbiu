@@ -1,6 +1,4 @@
 import {NgModule} from '@angular/core';
-
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -37,7 +35,6 @@ import {MatTreeModule} from '@angular/material/tree';
         MatIconModule,
         MatCardModule,
         MatInputModule,
-        MatAutocompleteModule,
         MatBottomSheetModule,
         MatButtonToggleModule,
         MatCheckboxModule,

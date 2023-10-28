@@ -167,17 +167,17 @@ export class CrossesComponent implements OnInit {
         this.crossService.createCross(cross)
             .pipe(first())
             .subscribe({
-                next: res => res?.ok && this.handleOperationSuccess(cross.name, 'created', onSuccess),
+                next: res => res && this.handleOperationSuccess(res.name, 'created', onSuccess),
                 error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationFailure(err.error)
             });
     }
 
     private updateAndRefresh = (cross: Cross, onSuccess: () => void) => {
-        const {id, name} = cross;
+        const id = cross.id;
         cross.id = cross.name = cross.creationDate = undefined;
         this.crossService.updateCross(id, cross)
             .pipe(first())
-            .subscribe(res => res?.ok && this.handleOperationSuccess(name, 'updated', onSuccess));
+            .subscribe(res => res && this.handleOperationSuccess(res.name, 'updated', onSuccess));
     }
 
     private deleteAndRefresh = (cross: Cross) => {

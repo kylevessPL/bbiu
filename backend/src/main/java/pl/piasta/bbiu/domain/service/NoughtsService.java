@@ -1,14 +1,15 @@
 package pl.piasta.bbiu.domain.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piasta.bbiu.domain.dto.CreateNoughtDto;
 import pl.piasta.bbiu.domain.dto.UpdateNoughtDto;
 import pl.piasta.bbiu.domain.exception.NoughtNameUniquenessViolationException;
 import pl.piasta.bbiu.domain.exception.NoughtNotFoundException;
-import pl.piasta.bbiu.domain.query.NoughtBasicProjection;
-import pl.piasta.bbiu.domain.query.NoughtProjection;
+import pl.piasta.bbiu.domain.projection.NoughtBasicProjection;
+import pl.piasta.bbiu.domain.projection.NoughtProjection;
 import pl.piasta.bbiu.model.Nought;
 import pl.piasta.bbiu.repository.NoughtRepository;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 class NoughtsService implements NoughtsManager {
     private final NoughtRepository repository;
+    private final ProjectionFactory projectionFactory;
 
     @Override
     @Transactional(readOnly = true)
@@ -33,20 +35,21 @@ class NoughtsService implements NoughtsManager {
     }
 
     @Override
-    public long create(CreateNoughtDto dto) {
+    public NoughtProjection create(CreateNoughtDto dto) {
         if (repository.existsByName(dto.name())) {
             throw new NoughtNameUniquenessViolationException(dto.name());
         }
         var nought = createNought(dto);
-        return repository.save(nought).getId();
+        return project(repository.save(nought));
     }
 
     @Override
-    public void update(long id, UpdateNoughtDto dto) {
-        repository.findById(id).ifPresentOrElse(
-                nought -> updateNought(nought, dto),
-                () -> {throw new NoughtNotFoundException(id);}
-        );
+    public NoughtProjection update(long id, UpdateNoughtDto dto) {
+        return repository.findById(id)
+                .map(nought -> {
+                    updateNought(nought, dto);
+                    return project(nought);
+                }).orElseThrow(() -> new NoughtNotFoundException(id));
     }
 
     @Override
@@ -67,5 +70,9 @@ class NoughtsService implements NoughtsManager {
 
     private void updateNought(Nought nought, UpdateNoughtDto dto) {
         nought.update(dto.radius(), dto.color(), dto.comment());
+    }
+
+    private NoughtProjection project(Nought nought) {
+        return projectionFactory.createProjection(NoughtProjection.class, nought);
     }
 }

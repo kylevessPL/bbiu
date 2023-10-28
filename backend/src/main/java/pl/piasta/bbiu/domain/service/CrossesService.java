@@ -11,7 +11,7 @@ import pl.piasta.bbiu.domain.dto.CreateCrossDto;
 import pl.piasta.bbiu.domain.dto.UpdateCrossDto;
 import pl.piasta.bbiu.domain.exception.CrossNameUniquenessViolationException;
 import pl.piasta.bbiu.domain.exception.CrossNotFoundException;
-import pl.piasta.bbiu.domain.query.CrossProjection;
+import pl.piasta.bbiu.domain.projection.CrossProjection;
 import pl.piasta.bbiu.model.Cross;
 import pl.piasta.bbiu.repository.CrossRepository;
 
@@ -35,20 +35,21 @@ class CrossesService implements CrossesManager {
     }
 
     @Override
-    public long create(CreateCrossDto dto) {
+    public CrossProjection create(CreateCrossDto dto) {
         if (repository.existsByName(dto.name())) {
             throw new CrossNameUniquenessViolationException(dto.name());
         }
         var cross = createCross(dto);
-        return repository.save(cross).getId();
+        return project(repository.save(cross));
     }
 
     @Override
-    public void update(long id, UpdateCrossDto dto) {
-        repository.findById(id).ifPresentOrElse(
-                cross -> updateCross(cross, dto),
-                () -> {throw new CrossNotFoundException(id);}
-        );
+    public CrossProjection update(long id, UpdateCrossDto dto) {
+        return repository.findById(id)
+                .map(cross -> {
+                    updateCross(cross, dto);
+                    return project(cross);
+                }).orElseThrow(() -> new CrossNotFoundException(id));
     }
 
     @Override

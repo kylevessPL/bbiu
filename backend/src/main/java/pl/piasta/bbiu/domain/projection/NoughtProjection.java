@@ -1,4 +1,4 @@
-package pl.piasta.bbiu.domain.query;
+package pl.piasta.bbiu.domain.projection;
 
 import org.springframework.beans.factory.annotation.Value;
 import pl.piasta.bbiu.domain.enumeration.Color;

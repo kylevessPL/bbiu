@@ -8,6 +8,5 @@ export const validation = {
     weightMax: 10,
     beamsMin: 1,
     radiusMin: 0.1,
-    radiusMax: 99.9,
-    radiusStep: 0.1
+    radiusMax: 99.9
 };

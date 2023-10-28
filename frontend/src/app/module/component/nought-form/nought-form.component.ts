@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import EnumUtils from '../../util/enum-utils';
 import {DateFormatterPipe} from '../../pipe/date-formatter.pipe';
 import ValidationUtils from '../../util/validation-utils';
@@ -31,7 +31,8 @@ export class NoughtFormComponent implements OnChanges, OnDestroy {
     protected readonly commentMaxLength = validation.commentMaxLength;
     protected readonly radiusMin = validation.radiusMin;
     protected readonly radiusMax = validation.radiusMax;
-    protected readonly radiusStep = validation.radiusStep;
+
+    @ViewChild(FormGroupDirective) formRef: FormGroupDirective;
 
     constructor(private dateFormatter: DateFormatterPipe, private fb: FormBuilder) {
     }
@@ -40,6 +41,7 @@ export class NoughtFormComponent implements OnChanges, OnDestroy {
         const {id, name, radius, color, creationDate, comment} = this.nought ?? {};
         this.edit = this.nought !== undefined;
         this.radiusSubscription?.unsubscribe();
+        this.formRef?.resetForm();
         this.form = this.fb.group({
             id: new FormControl({value: id, disabled: true}),
             name: new FormControl(
@@ -108,8 +110,7 @@ export class NoughtFormComponent implements OnChanges, OnDestroy {
 
     private formatDecimalField = (field: string, value: number) => {
         const patch = formatNumber(value, 'en-US', '1.1-1');
-        this.form.get(field).reset();
-        this.form.get(field).setValue(patch.replace(/,/g, ''), {
+        this.form.get(field).patchValue(patch.replace(/,/g, ''), {
             emitEvent: false
         });
     }

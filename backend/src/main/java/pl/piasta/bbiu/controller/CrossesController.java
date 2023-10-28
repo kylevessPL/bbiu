@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import pl.piasta.bbiu.config.CreatedResource;
 import pl.piasta.bbiu.domain.dto.CreateCrossDto;
 import pl.piasta.bbiu.domain.dto.UpdateCrossDto;
-import pl.piasta.bbiu.domain.query.CrossProjection;
+import pl.piasta.bbiu.domain.projection.CrossProjection;
 import pl.piasta.bbiu.domain.service.CrossesManager;
 import pl.piasta.bbiu.domain.specification.CrossSpecification;
 
@@ -38,9 +37,8 @@ class CrossesController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public CreatedResource createCross(@Valid @RequestBody CreateCrossDto dto) {
-        var id = manager.create(dto);
-        return new CreatedResource(id);
+    public CrossProjection createCross(@Valid @RequestBody CreateCrossDto dto) {
+        return manager.create(dto);
     }
 
     @GetMapping("/{id}")
@@ -49,9 +47,8 @@ class CrossesController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(NO_CONTENT)
-    public void updateCross(@PathVariable long id, @Valid @RequestBody UpdateCrossDto dto) {
-        manager.update(id, dto);
+    public CrossProjection updateCross(@PathVariable long id, @Valid @RequestBody UpdateCrossDto dto) {
+        return manager.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
