@@ -18,10 +18,6 @@
   color: $color-blue;
 }
 
-::ng-deep .mat-drawer-inner-container {
-  overflow: hidden !important;
-}
-
 .toolbar {
   background-color: $color-navy-blue;
   display: flex;

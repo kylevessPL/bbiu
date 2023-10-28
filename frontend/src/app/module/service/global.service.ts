@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {ErrorResponse} from '../model/error-response';
 
 @Injectable({providedIn: 'root'})
 export class GlobalService {
@@ -14,4 +15,15 @@ export class GlobalService {
         {
             duration: undefined
         })
+
+    public showSuccessfulOperationNotification = (name: string, operation: 'created' | 'updated' | 'deleted') => {
+        this.snackBar.open(`${name} has been ${operation}`, 'OK');
+    }
+
+    public showFailedOperationNotification = (error: ErrorResponse) => {
+        this.snackBar.open(error.message, 'OK', {
+            duration: 5000,
+            panelClass: ['mat-toolbar', 'mat-warn']
+        });
+    }
 }

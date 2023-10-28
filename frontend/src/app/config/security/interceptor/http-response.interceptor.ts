@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class HttpResponseInterceptor implements HttpInterceptor {
-    private readonly _iso8601 = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/;
+    private readonly iso8601 = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/;
 
     intercept = (req: HttpRequest<any>, next: HttpHandler) => next.handle(req).pipe(
         tap(event => {
@@ -13,9 +13,9 @@ export class HttpResponseInterceptor implements HttpInterceptor {
                 this.convertToDate(body);
             }
         }),
-    );
+    )
 
-    private convertToDate(body) {
+    private convertToDate = (body: any) => {
         if (body == null || typeof body !== 'object') {
             return body;
         }
@@ -29,5 +29,5 @@ export class HttpResponseInterceptor implements HttpInterceptor {
         }
     }
 
-    private isIso8601 = (value) => value != null && this._iso8601.test(value);
+    private isIso8601 = (value: string) => value != null && this.iso8601.test(value);
 }

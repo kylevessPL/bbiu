@@ -3,10 +3,34 @@
         <div class="border-top"></div>
         <mat-card-title>Noughts</mat-card-title>
         <div class="border-bottom"></div>
-        <!--        <app-noughts-list-->
-        <!--                [data]="data | async"-->
-        <!--                [error]="error"-->
-        <!--                (pageEvent)="fetchData($event)">-->
-        <!--        </app-noughts-list>-->
+        <div class="noughts-content">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>{{current ? 'Edit nought' : 'Create nought'}}</mat-card-title>
+                </mat-card-header>
+                <app-nought-form
+                        [nought]="current"
+                        (saveEvent)="saveNought($event)"
+                        (deleteEvent)="deleteNought()">
+                </app-nought-form>
+            </mat-card>
+            <mat-card>
+                <mat-card-header class="noughts-list-header">
+                    <button mat-fab class="extended-fab" color="primary" (click)="switchCurrent()">
+                        <mat-icon>add</mat-icon>
+                        <span class="extended-fab__text">Create</span>
+                    </button>
+                </mat-card-header>
+                <mat-card-content>
+                    <app-selection-list
+                            [data]="data"
+                            [selected]="current"
+                            [accessors]="accessors"
+                            [error]="error"
+                            (selectionEvent)="switchCurrent($event)">
+                    </app-selection-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
     </mat-card>
 </div>

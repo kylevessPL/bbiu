@@ -1,0 +1,41 @@
+<form [formGroup]="form" (ngSubmit)="form.valid && save()">
+    <div class="nought-form-content">
+        <mat-form-field class="form-field">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" [maxLength]="nameMaxLength" formControlName="name">
+            <mat-error *ngIf="isRequiredError('name')">{{requiredErrorMessage()}}</mat-error>
+            <mat-error *ngIf="isTextMaxError('name')">{{textMaxErrorMessage(nameMaxLength)}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" *ngIf="edit">
+            <mat-label>Creation date</mat-label>
+            <input matInput formControlName="creationDate">
+            <mat-datepicker-toggle matSuffix disabled></mat-datepicker-toggle>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <mat-label>Comment</mat-label>
+            <input matInput type="text" [maxLength]="commentMaxLength" formControlName="comment">
+            <mat-error *ngIf="isTextMaxError('comment')">{{textMaxErrorMessage(commentMaxLength)}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <mat-label>Radius</mat-label>
+            <input matInput NgxNumbersOnly type="text" inputmode="decimal" allowDecimals="true"
+                   formControlName="radius">
+            <mat-error *ngIf="isRequiredError('radius')">{{requiredErrorMessage()}}</mat-error>
+            <mat-error *ngIf="isNumberMinError('radius')">{{numberMinErrorMessage(radiusMin)}}</mat-error>
+            <mat-error *ngIf="isNumberMaxError('radius')">{{numberMaxErrorMessage(radiusMax)}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+            <mat-label>Color</mat-label>
+            <mat-select formControlName="color">
+                <mat-option *ngFor="let key of colorKeys" [value]="key">
+                    {{color[key]}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="isRequiredError('color')">{{requiredErrorMessage()}}</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="nought-form-actions">
+        <button mat-raised-button type="submit" color="accent">Save</button>
+        <button mat-raised-button type="button" color="warn" *ngIf="edit" (click)="delete()">Delete</button>
+    </div>
+</form>

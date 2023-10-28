@@ -29,7 +29,7 @@ class NoughtsService implements NoughtsManager {
     @Override
     @Transactional(readOnly = true)
     public List<NoughtBasicProjection> getAll() {
-        return repository.findAllBy();
+        return repository.findAllByOrderByCreationDateDesc();
     }
 
     @Override
@@ -37,8 +37,8 @@ class NoughtsService implements NoughtsManager {
         if (repository.existsByName(dto.name())) {
             throw new NoughtNameUniquenessViolationException(dto.name());
         }
-        var naught = createNought(dto);
-        return repository.save(naught).getId();
+        var nought = createNought(dto);
+        return repository.save(nought).getId();
     }
 
     @Override

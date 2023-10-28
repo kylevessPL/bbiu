@@ -17,12 +17,6 @@ import {Moment} from 'moment';
     providers: [DateFormatterPipe]
 })
 export class CrossFormDialogComponent implements OnInit {
-
-    constructor(@Inject(MAT_DIALOG_DATA) public data: CrossFormData,
-                private dateFormatter: DateFormatterPipe,
-                private fb: FormBuilder) {
-    }
-
     export = new EventEmitter<Cross>();
     edit: boolean;
     form: FormGroup;
@@ -38,12 +32,17 @@ export class CrossFormDialogComponent implements OnInit {
     protected readonly weightMax = validation.weightMax;
     protected readonly beamsMin = validation.beamsMin;
 
+    constructor(@Inject(MAT_DIALOG_DATA) public data: CrossFormData,
+                private dateFormatter: DateFormatterPipe,
+                private fb: FormBuilder) {
+    }
+
     ngOnInit() {
         const {
             id, name, angle, weight, beams,
             material, creationDate, expiryDate, comment
         } = this.data?.cross ?? {};
-        this.edit = this.data?.edit ?? false;
+        this.edit = this.data?.cross !== undefined;
         this.form = this.fb.group({
             id: new FormControl({value: id, disabled: true}),
             name: new FormControl(
@@ -87,7 +86,7 @@ export class CrossFormDialogComponent implements OnInit {
         this.export.emit(cross);
     }
 
-    private applyData() {
+    private applyData = () => {
         const cross: Cross = {
             ...this.data?.cross,
             name: this.edit ? this.data.cross.name : this.form.get('name').value,
@@ -101,7 +100,7 @@ export class CrossFormDialogComponent implements OnInit {
         return cross;
     }
 
-    private pruneData(cross: Cross) {
+    private pruneData = (cross: Cross) => {
         for (const key in cross) {
             if (cross[key] === null || cross[key] === '') {
                 cross[key] = undefined;

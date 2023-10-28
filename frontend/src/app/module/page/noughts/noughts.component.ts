@@ -1,9 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {first} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
-import {PageMeta} from '../../model/page-meta';
 import {GlobalService} from '../../service/global.service';
 import {NoughtService} from '../../service/nought.service';
+import {Nought} from '../../model/nought';
+import {ListAccessors} from '../../model/list-accessors';
+import {
+    ConfirmationData,
+    ConfirmationDialogComponent
+} from '../../component/confirmation-dialog/confirmation-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {ErrorResponse} from '../../model/error-response';
 
 @Component({
     selector: 'app-noughts',
@@ -11,16 +18,20 @@ import {NoughtService} from '../../service/nought.service';
     styleUrls: ['./noughts.component.scss']
 })
 export class NoughtsComponent implements OnInit {
-    data: Observable<any>;
-    pageMeta: PageMeta = {
-        page: 0,
-        size: 5,
-        sort: 'id',
-        sortDirection: 'asc'
+    data: Nought[];
+    current: Nought;
+    accessors: ListAccessors = {
+        title: 'Noughts',
+        icon: 'circle',
+        identifier: 'id',
+        primaryKey: 'name',
+        secondaryKey: 'creationDate'
     };
     error: HttpErrorResponse;
 
-    constructor(private productService: NoughtService, private globalService: GlobalService) {
+    constructor(private dialog: MatDialog,
+                private noughtService: NoughtService,
+                private globalService: GlobalService) {
     }
 
     ngOnInit() {
@@ -28,11 +39,76 @@ export class NoughtsComponent implements OnInit {
             this.error = error;
         });
         this.error = null;
-        this.fetchData(this.pageMeta);
+        this.fetchData();
     }
 
-    fetchData = (pageMeta: PageMeta) => {
-        this.pageMeta = pageMeta;
-        this.data = this.productService.getAllNoughts(pageMeta);
+    fetchData = () => this.noughtService.getAllNoughts()
+        .pipe(first())
+        .subscribe(noughts => this.data = noughts)
+
+    switchCurrent = (nought: Nought = undefined) => {
+        this.current = nought;
     }
+
+    saveNought = (nought: Nought) => {
+        if (!this.current) {
+            this.createAndRefresh(nought);
+        } else {
+            this.updateAndRefresh(nought);
+        }
+    }
+
+    deleteNought = () => {
+        this.dialog.open(ConfirmationDialogComponent, {
+            data: {
+                title: 'Nought deletion',
+                message: `Are you sure you want to delete ${this.current.name}?`,
+            } as ConfirmationData
+        }).afterClosed()
+            .pipe(first())
+            .subscribe((res: boolean) => res && this.deleteAndRefresh());
+    }
+
+    private createAndRefresh = (nought: Nought) => {
+        const onSuccess = () => {
+            this.data.push(nought);
+            this.switchCurrent(nought);
+        };
+        this.noughtService.createNought(nought)
+            .pipe(first())
+            .subscribe({
+                next: res => res?.ok && this.handleOperationSuccess(nought.name, 'created', onSuccess),
+                error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationFailure(err.error)
+            });
+    }
+
+    private updateAndRefresh = (nought: Nought) => {
+        nought.id = nought.name = nought.creationDate = undefined;
+        const onSuccess = () => {
+            const index = this.data.indexOf(this.current);
+            this.data[index] = nought;
+            this.switchCurrent(nought);
+        };
+        this.noughtService.updateNought(this.current.id, nought)
+            .pipe(first())
+            .subscribe(res => res?.ok && this.handleOperationSuccess(this.current.name, 'updated', onSuccess));
+    }
+
+    private deleteAndRefresh = () => {
+        const onSuccess = () => {
+            this.data = this.data.filter(item => item !== this.current);
+            this.switchCurrent();
+        };
+        this.noughtService.deleteNought(this.current.id)
+            .pipe(first())
+            .subscribe(res => res?.ok && this.handleOperationSuccess(this.current.name, 'deleted', onSuccess));
+    }
+
+    private handleOperationSuccess = (name: string, operation: 'created' | 'updated' | 'deleted', onSuccess: () => void = () => {
+    }) => {
+        onSuccess();
+        this.globalService.showSuccessfulOperationNotification(name, operation);
+    }
+
+    private handleOperationFailure = (error: ErrorResponse) => this.globalService.showFailedOperationNotification(error);
 }

@@ -15,3 +15,26 @@
   background: black;
   background: -webkit-gradient(linear, 0 0, 100% 0, from(black), to(white), color-stop(50%, black));
 }
+
+.noughts-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  .mat-card {
+    flex: 1;
+    min-width: 0;
+
+    &:not(:last-child) {
+      margin-right: 24px;
+    }
+  }
+
+  .mat-card-header {
+    margin-bottom: calc(1.34375em - 12px)
+  }
+
+  .noughts-list-header {
+    justify-content: center;
+  }
+}

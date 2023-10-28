@@ -2,7 +2,7 @@ export const restUrl = {
     /**
      * Noughts
      */
-    noughtsBase: 'circles',
+    noughtsBase: 'noughts',
 
     /**
      * Crosses

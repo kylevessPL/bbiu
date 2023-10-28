@@ -38,7 +38,7 @@ import {CrossesComponent} from './module/page/crosses/crosses.component';
 import {CrossesFilterComponent} from './module/component/crosses-filter/crosses-filter.component';
 import {ConfirmationDialogComponent} from './module/component/confirmation-dialog/confirmation-dialog.component';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarConfig} from '@angular/material/snack-bar';
-import {CrossFormDialogComponent} from './module/component/cross-form/cross-form-dialog.component';
+import {CrossFormDialogComponent} from './module/component/cross-form-dialog/cross-form-dialog.component';
 import {
     NGX_MAT_DATE_FORMATS,
     NgxMatDateFormats,
@@ -46,17 +46,21 @@ import {
 } from '@angular-material-components/datetime-picker';
 import {NgxMatMomentModule} from '@angular-material-components/moment-adapter';
 import {environment} from '../environments/environment';
-import {NgxNumbersOnlyDirectiveModule} from "ngx-numbers-only-directive";
+import {NgxNumbersOnlyDirectiveModule} from 'ngx-numbers-only-directive';
+import {NoughtFormComponent} from './module/component/nought-form/nought-form.component';
+import {SelectionListComponent} from './module/component/selection-list/selection-list.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NoughtsComponent,
+        NoughtFormComponent,
         CrossesComponent,
         CrossFormDialogComponent,
         CrossesFilterComponent,
         FooterComponent,
         DataTableComponent,
+        SelectionListComponent,
         ConfirmationDialogComponent,
         TypeSafeMatCellDefDirective,
         DataPropertyGetterPipe,

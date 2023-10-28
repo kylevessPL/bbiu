@@ -1,8 +1,9 @@
-<form autocomplete="off" [formGroup]="form" (ngSubmit)="form.valid && apply()" class="flex flex-wrap">
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="form.valid && apply()">
     <div>
         <mat-form-field class="form-field">
             <mat-label>Id</mat-label>
-            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" [min]="idMin" formControlName="id"
+            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" inputmode="number" [min]="idMin"
+                   formControlName="id"
                    id="id-search">
             <button matSuffix mat-icon-button type="button" (click)="clearField('id', $event)">
                 <mat-icon>close</mat-icon>
@@ -35,7 +36,8 @@
     <div>
         <mat-form-field class="form-field">
             <mat-label>Angle</mat-label>
-            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" [min]="angleMin" [max]="angleMax"
+            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" inputmode="number" [min]="angleMin"
+                   [max]="angleMax"
                    formControlName="angle" id="angle-search">
             <button matSuffix mat-icon-button type="button" (click)="clearField('angle', $event)">
                 <mat-icon>close</mat-icon>
@@ -45,7 +47,8 @@
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>Weight</mat-label>
-            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" [min]="weightMin" [max]="weightMax"
+            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" inputmode="number" [min]="weightMin"
+                   [max]="weightMax"
                    formControlName="weight" id="weight-search">
             <button matSuffix mat-icon-button type="button" (click)="clearField('weight', $event)">
                 <mat-icon>close</mat-icon>
@@ -55,7 +58,7 @@
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>Beams</mat-label>
-            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" [min]="beamsMin"
+            <input matInput NgxNumbersOnly aria-autocomplete="none" type="number" inputmode="number" [min]="beamsMin"
                    formControlName="beams" id="beams-search">
             <button matSuffix mat-icon-button type="button" (click)="clearField('beams', $event)">
                 <mat-icon>close</mat-icon>

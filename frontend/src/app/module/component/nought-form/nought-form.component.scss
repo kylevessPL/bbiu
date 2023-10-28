@@ -1,0 +1,17 @@
+.nought-form-content {
+  display: flex;
+  flex-direction: column;
+
+  .mat-form-field {
+    margin-right: 0;
+  }
+}
+
+.nought-form-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  > button:not(:last-child) {
+    margin-right: 8px;
+  }
+}

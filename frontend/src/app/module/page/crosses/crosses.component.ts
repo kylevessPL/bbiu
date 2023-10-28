@@ -14,7 +14,7 @@ import {
 } from '../../component/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {CrossFormData, CrossFormDialogComponent} from '../../component/cross-form/cross-form-dialog.component';
+import {CrossFormData, CrossFormDialogComponent} from '../../component/cross-form-dialog/cross-form-dialog.component';
 import {ErrorResponse} from '../../model/error-response';
 
 @Component({
@@ -107,11 +107,10 @@ export class CrossesComponent implements OnInit {
     forceRefresh = new Subject<void>();
     error: HttpErrorResponse;
 
-    constructor(
-        private dialog: MatDialog,
-        private snackBar: MatSnackBar,
-        private crossService: CrossService,
-        private globalService: GlobalService) {
+    constructor(private dialog: MatDialog,
+                private snackBar: MatSnackBar,
+                private crossService: CrossService,
+                private globalService: GlobalService) {
     }
 
     ngOnInit() {
@@ -143,10 +142,7 @@ export class CrossesComponent implements OnInit {
 
     editCross = (cross: Cross) => {
         const dialog = this.dialog.open(CrossFormDialogComponent, {
-            data: {
-                cross,
-                edit: true
-            } as CrossFormData,
+            data: {cross} as CrossFormData,
             disableClose: true
         });
         const data = this.dataOperationEvent(dialog);
@@ -181,10 +177,7 @@ export class CrossesComponent implements OnInit {
         cross.id = cross.name = cross.creationDate = undefined;
         this.crossService.updateCross(id, cross)
             .pipe(first())
-            .subscribe({
-                next: res => res?.ok && this.handleOperationSuccess(name, 'updated', onSuccess),
-                error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationFailure(err.error)
-            });
+            .subscribe(res => res?.ok && this.handleOperationSuccess(name, 'updated', onSuccess));
     }
 
     private deleteAndRefresh = (cross: Cross) => {
@@ -193,27 +186,19 @@ export class CrossesComponent implements OnInit {
             .subscribe(res => res?.ok && this.handleOperationSuccess(cross.name, 'deleted'));
     }
 
-    private dataOperationEvent(dialog: MatDialogRef<CrossFormDialogComponent, boolean>) {
-        const data = dialog.componentInstance.export;
-        dialog.afterClosed().pipe(first()).subscribe(res => res && this.snackBar.dismiss());
-        return data;
+    private dataOperationEvent = (dialog: MatDialogRef<CrossFormDialogComponent, boolean>) => {
+        dialog.afterClosed()
+            .pipe(first())
+            .subscribe(res => res && this.snackBar.dismiss());
+        return dialog.componentInstance.export;
     }
 
-    private handleOperationSuccess(name: string, operation: 'created' | 'updated' | 'deleted', onSuccess: () => void = () => {
-    }) {
+    private handleOperationSuccess = (name: string, operation: 'created' | 'updated' | 'deleted', onSuccess: () => void = () => {
+    }) => {
         onSuccess();
         this.forceRefresh.next();
-        this.showOperationNotification(name, operation);
+        this.globalService.showSuccessfulOperationNotification(name, operation);
     }
 
-    private handleOperationFailure(error: ErrorResponse) {
-        this.snackBar.open(error.message, 'OK', {
-            duration: 5000,
-            panelClass: ['mat-toolbar', 'mat-warn']
-        });
-    }
-
-    private showOperationNotification = (name: string, operation: 'created' | 'updated' | 'deleted') => {
-        this.snackBar.open(`${name} has been ${operation}`, 'OK');
-    }
+    private handleOperationFailure = (error: ErrorResponse) => this.globalService.showFailedOperationNotification(error);
 }

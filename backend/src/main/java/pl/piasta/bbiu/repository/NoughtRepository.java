@@ -13,7 +13,7 @@ public interface NoughtRepository extends JpaRepository<Nought, Long> {
 
     Optional<NoughtProjection> findOneById(Long id);
 
-    List<NoughtBasicProjection> findAllBy();
+    List<NoughtBasicProjection> findAllByOrderByCreationDateDesc();
 
     Integer deleteOneById(Long id);
 }

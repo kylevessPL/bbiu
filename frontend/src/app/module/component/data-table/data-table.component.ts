@@ -27,10 +27,6 @@ import {environment} from '../../../../environments/environment';
     styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy, OnChanges {
-
-    constructor(private globalService: GlobalService) {
-    }
-
     @Input() columns: TableColumn[];
     @Input() pageSize = 10;
     @Input() sortColumnDefault: string;
@@ -55,6 +51,9 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy,
 
     private forceRefreshSubscription: Subscription;
     protected readonly environment = environment;
+
+    constructor(private globalService: GlobalService) {
+    }
 
     ngOnInit() {
         this.columnKeys = this.columnKeys.concat(this.columns.map(({key}) => key));
