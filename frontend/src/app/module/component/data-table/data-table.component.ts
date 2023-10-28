@@ -28,7 +28,7 @@ import {environment} from '../../../../environments/environment';
 })
 export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy, OnChanges {
     @Input() columns: TableColumn[];
-    @Input() pageSize = 10;
+    @Input() pageSize = 5;
     @Input() sortColumnDefault: string;
     @Input() sortDirectionDefault: SortDirection = 'asc';
     @Input() rowActions: TableRowAction<T>[] = [];
@@ -79,7 +79,7 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy,
         }
     }
 
-    fetchData = (event: PageEvent = null) => {
+    fetchData = (event?: PageEvent) => {
         this.hidden = true;
         const meta: PageMeta = {
             page: event ? event.pageIndex : 0,
