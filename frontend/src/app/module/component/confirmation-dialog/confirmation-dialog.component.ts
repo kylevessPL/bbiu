@@ -13,4 +13,6 @@ export class ConfirmationDialogComponent {
 export interface ConfirmationData {
     title: string;
     message: string;
+    action: string;
+    cancel: boolean;
 }

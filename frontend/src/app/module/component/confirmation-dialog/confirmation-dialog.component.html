@@ -1,6 +1,6 @@
 <h1 mat-dialog-title [align]="'center'">{{data.title}}</h1>
 <div mat-dialog-content [align]="'center'">{{data.message}}</div>
 <div mat-dialog-actions [align]="'center'">
-    <button mat-flat-button color="warn" [mat-dialog-close]="true">Yes</button>
-    <button mat-flat-button [mat-dialog-close]="false">No</button>
+    <button mat-flat-button color="warn" [mat-dialog-close]="true">{{data.action}}</button>
+    <button mat-flat-button [mat-dialog-close]="false" *ngIf="data.cancel ?? true">No</button>
 </div>

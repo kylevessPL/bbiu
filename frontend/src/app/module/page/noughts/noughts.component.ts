@@ -69,6 +69,8 @@ export class NoughtsComponent implements OnInit {
             data: {
                 title: 'Nought deletion',
                 message: `Are you sure you want to delete ${this.current.name}?`,
+                action: 'Yes',
+                cancel: true
             } as ConfirmationData
         }).afterClosed()
             .pipe(first())

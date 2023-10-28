@@ -2,11 +2,24 @@
 
     <mat-toolbar class="toolbar">
         <div class="toolbar-content">
-            <button mat-icon-button class="menu-button" (click)="snav.toggle()">
+            <button mat-icon-button class="hamburger-button" (click)="snav.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
             <img class="logo" ngSrc="assets/img/logo.svg" alt="Logo" height="44" width="113" draggable="false">
         </div>
+        <button mat-icon-button class="menu-button" [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="showCopyrightNotification()">
+                <mat-icon>notifications</mat-icon>
+                <span>Show copyright notification</span>
+            </button>
+            <button mat-menu-item (click)="showCopyrightDialog()">
+                <mat-icon>wysiwyg</mat-icon>
+                <span>Show copyright dialog</span>
+            </button>
+        </mat-menu>
     </mat-toolbar>
 
     <mat-sidenav-container class="sidenav-container" [style.margin-top.px]="mobileQuery.matches ? 56 : 0">

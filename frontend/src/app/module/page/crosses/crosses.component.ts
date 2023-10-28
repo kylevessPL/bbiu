@@ -157,6 +157,8 @@ export class CrossesComponent implements OnInit {
             data: {
                 title: 'Cross deletion',
                 message: `Are you sure you want to delete ${cross.name}?`,
+                action: 'Yes',
+                cancel: true
             } as ConfirmationData
         }).afterClosed()
             .pipe(first())
