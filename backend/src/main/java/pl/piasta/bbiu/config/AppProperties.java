@@ -1,8 +1,7 @@
 package pl.piasta.bbiu.config;
 
-//@ConfigurationProperties("app.config")
-//public record AppProperties(@NestedConfigurationProperty CorsProperties cors) {
-//}
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-public record AppProperties() {
+@ConfigurationProperties("app")
+public record AppProperties(Long allowedResourceModificationRateMinutes) {
 }

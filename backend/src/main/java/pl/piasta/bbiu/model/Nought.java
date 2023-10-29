@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import pl.piasta.bbiu.domain.enumeration.Color;
 
 import java.time.Instant;
@@ -25,7 +26,7 @@ import static pl.piasta.bbiu.domain.enumeration.Color.BLACK;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Nought {
+public class Nought extends ModificationTrackedEntity {
     public static final int NAME_LENGTH = 30;
     public static final int COMMENT_LENGTH = 128;
 
@@ -50,8 +51,11 @@ public class Nought {
             nullable = false, insertable = false, updatable = false,
             columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP"
     )
-    @Default
-    private Instant creationDate = Instant.now();
+    private Instant creationDate;
+
+    @Setter
+    @Column(insertable = false)
+    private Instant modificationDate;
 
     @Column(length = COMMENT_LENGTH)
     private String comment;

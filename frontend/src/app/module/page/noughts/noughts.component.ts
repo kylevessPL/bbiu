@@ -86,7 +86,7 @@ export class NoughtsComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: res => res && this.handleOperationSuccess(res, 'created', onSuccess),
-                error: (err: HttpErrorResponse) => err.status === 409 && this.handleOperationFailure(err.error)
+                error: (err: HttpErrorResponse) => err.status === 409 && this.handleCreationFailure(err.error)
             });
     }
 
@@ -95,7 +95,10 @@ export class NoughtsComponent implements OnInit {
         const onSuccess = (item: Nought) => this.switchCurrent(item);
         this.noughtService.updateNought(this.current.id, nought)
             .pipe(first())
-            .subscribe(res => res && this.handleOperationSuccess(res, 'updated', onSuccess));
+            .subscribe({
+                next: res => res && this.handleOperationSuccess(res, 'updated', onSuccess),
+                error: (err: HttpErrorResponse) => err.status === 409 && this.handleUpdateFailure(err.error)
+            });
     }
 
     private deleteAndRefresh = () => {
@@ -127,5 +130,7 @@ export class NoughtsComponent implements OnInit {
         this.globalService.showSuccessfulOperationNotification(nought.name, operation);
     }
 
-    private handleOperationFailure = (error: ErrorResponse) => this.globalService.showFailedOperationNotification(error);
+    private handleCreationFailure = (error: ErrorResponse) => this.globalService.showFailedOperationNotification(error);
+
+    private handleUpdateFailure = (error: ErrorResponse) => this.globalService.showFailedOperationDialog(error);
 }

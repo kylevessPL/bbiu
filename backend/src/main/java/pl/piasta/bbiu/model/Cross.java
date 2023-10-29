@@ -58,8 +58,7 @@ public class Cross {
             nullable = false, insertable = false, updatable = false,
             columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP"
     )
-    @Default
-    private Instant creationDate = Instant.now();
+    private Instant creationDate;
 
     @Column
     private Instant expiryDate;

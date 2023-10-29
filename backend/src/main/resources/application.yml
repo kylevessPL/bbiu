@@ -1,3 +1,5 @@
+app:
+  allowedResourceModificationRateMinutes: 60
 # noinspection SpringBootApplicationYaml
 cors:
   maxAge: 3600

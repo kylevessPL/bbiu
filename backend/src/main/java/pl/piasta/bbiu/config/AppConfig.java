@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.web.cors.CorsConfiguration;
@@ -13,6 +14,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.time.Duration;
 import java.util.List;
 
 @Configuration
@@ -32,7 +34,7 @@ class AppConfig implements WebMvcConfigurer {
 
     @Bean
     @ConfigurationProperties("cors")
-    public CorsConfiguration corsConfiguration() {
+    CorsConfiguration corsConfiguration() {
         final CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.applyPermitDefaultValues();
         return corsConfiguration;
@@ -41,5 +43,11 @@ class AppConfig implements WebMvcConfigurer {
     @Bean
     SpelAwareProxyProjectionFactory projectionFactory() {
         return new SpelAwareProxyProjectionFactory();
+    }
+
+    @Bean
+    @Lazy
+    Duration allowedResourceModificationRate(AppProperties properties) {
+        return Duration.ofMinutes(properties.allowedResourceModificationRateMinutes());
     }
 }
