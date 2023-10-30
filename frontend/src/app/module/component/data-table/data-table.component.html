@@ -1,9 +1,11 @@
 <div [hidden]="hidden">
-    <mat-table [dataSource]="dataSource"
+    <mat-table [class.table-scroll]="mobile"
+               [dataSource]="dataSource"
                (matSortChange)="sortData($event)"
                [matSortDisableClear]="true"
                [matSortActive]="sortColumnDefault"
                [matSortDirection]="sortDirectionDefault"
+               (resized)="onResized($event)"
                class="mat-elevation-z8"
                matSort>
         <ng-container *ngIf="rowActions.length > 0" [matColumnDef]="rowActionColumnKey">

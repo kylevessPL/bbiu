@@ -20,6 +20,7 @@ import {PageMeta} from '../../model/page-meta';
 import {TableRowAction} from '../../model/table-row-action';
 import {Observable, Subscription, timer} from 'rxjs';
 import {environment} from '../../../../environments/environment';
+import {ResizedEvent} from 'angular-resize-event';
 
 @Component({
     selector: 'app-data-table',
@@ -40,6 +41,7 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy,
 
     @ViewChild(MatPaginator, {read: true}) paginator: MatPaginator;
 
+    mobile: boolean;
     hidden = true;
     rowIndexColumnKey = 'index';
     rowActionColumnKey = 'action';
@@ -77,6 +79,10 @@ export class DataTableComponent<T extends Page<T>> implements OnInit, OnDestroy,
             this.data = null;
             this.changeData();
         }
+    }
+
+    onResized(event: ResizedEvent) {
+        this.mobile = event.newRect.width < 916;
     }
 
     fetchData = (event?: PageEvent) => {

@@ -1,8 +1,11 @@
 @import "src/assets/scss/colors";
 
 .mat-table {
-  overflow-x: auto;
   width: 100%;
+}
+
+.table-scroll {
+  overflow-x: auto;
 }
 
 .mat-cell,
