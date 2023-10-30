@@ -70,3 +70,13 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
+
+.carousel-slide, .carousel-slide-content, .carousel-list {
+  height: 100% !important;
+}
+
+.home-content, .carousel, mat-carousel {
+  display: flex !important;
+  flex-direction: column;
+  flex-grow: 1;
+}

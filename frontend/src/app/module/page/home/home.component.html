@@ -1,0 +1,16 @@
+<div class="page">
+    <mat-card (resized)="onResized($event)" class="home-content">
+        <div class="border-top"></div>
+        <mat-card-title>Home</mat-card-title>
+        <div class="border-bottom"></div>
+        <mat-carousel
+                timings="450ms ease-in"
+                interval="2500"
+                maintainAspectRatio="false"
+                [maxWidth]="width + 'px'"
+                [hideArrows]="false"
+                [hideIndicators]="false">
+            <mat-carousel-slide *ngFor="let image of images" [image]="image"></mat-carousel-slide>
+        </mat-carousel>
+    </mat-card>
+</div>

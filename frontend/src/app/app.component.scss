@@ -10,6 +10,12 @@
   right: 0;
 }
 
+.main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .mat-sidenav {
   min-width: 200px;
 }

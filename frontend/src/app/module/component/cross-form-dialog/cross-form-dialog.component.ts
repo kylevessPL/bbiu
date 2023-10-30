@@ -7,8 +7,7 @@ import EnumUtils from '../../util/enum-utils';
 import {DateFormatterPipe} from '../../pipe/date-formatter.pipe';
 import ValidationUtils from '../../util/validation-utils';
 import {validation} from '../../model/validation';
-import * as moment from 'moment';
-import {Moment} from 'moment';
+import moment, {Moment} from 'moment';
 
 @Component({
     selector: 'app-cross-form-dialog',

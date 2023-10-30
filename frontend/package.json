@@ -22,6 +22,8 @@
         "@angular/router": "^14.2.12",
         "@angular-material-components/datetime-picker": "^8.0.0",
         "@angular-material-components/moment-adapter": "^8.0.0",
+        "@thouet/material-carousel": "^14.2.2",
+        "angular-resize-event": "^3.2.0",
         "ngx-numbers-only-directive": "^1.0.2",
         "moment": "^2.29.4",
         "get-wild": "^3.0.2",

@@ -49,10 +49,14 @@ import {environment} from '../environments/environment';
 import {NgxNumbersOnlyDirectiveModule} from 'ngx-numbers-only-directive';
 import {NoughtFormComponent} from './module/component/nought-form/nought-form.component';
 import {SelectionListComponent} from './module/component/selection-list/selection-list.component';
+import {MatCarouselModule} from '@thouet/material-carousel';
+import {HomeComponent} from './module/page/home/home.component';
+import {AngularResizeEventModule} from 'angular-resize-event';
 
 @NgModule({
     declarations: [
         AppComponent,
+        HomeComponent,
         NoughtsComponent,
         NoughtFormComponent,
         CrossesComponent,
@@ -90,7 +94,9 @@ import {SelectionListComponent} from './module/component/selection-list/selectio
         NgxMatDatetimePickerModule,
         NgxMatMomentModule,
         NgxNumbersOnlyDirectiveModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        MatCarouselModule,
+        AngularResizeEventModule
     ],
     providers: [
         {
