@@ -1,0 +1,6 @@
+<mat-grid-list cols="3" @fadeIn rowHeight="fit">
+    <mat-grid-tile *ngFor="let square of squares; let position = index">
+        <app-square-piece [player]="square" [disabled]="disabled" (click)=makeMove(position)>
+        </app-square-piece>
+    </mat-grid-tile>
+</mat-grid-list>

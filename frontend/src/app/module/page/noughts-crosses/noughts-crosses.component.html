@@ -1,0 +1,32 @@
+<div class="page">
+    <mat-card class="full-content">
+        <div class="border-top"></div>
+        <mat-card-title>Noughts 'n' Crosses</mat-card-title>
+        <mat-card-subtitle>Tic-Tac-Toe game</mat-card-subtitle>
+        <div class="border-bottom"></div>
+        <mat-card-content class="noughts-crosses-content">
+            <div class="game-content">
+                <h2 class="players-info">Players:</h2>
+                <mat-chip-list class="players-content" aria-label="Players">
+                    <mat-chip *ngFor="let key of playerKeys"
+                              disableRipple disabled
+                              [color]="playerColor(player[key])"
+                              [selected]="playerSelected(player[key])">
+                        <mat-icon *ngIf="playerSelected(player[key])">check</mat-icon>
+                        Player {{player[key]}}
+                    </mat-chip>
+                </mat-chip-list>
+                <app-tic-tac-toe class="tic-tac-toe" [start]="newGame.asObservable()"
+                                 (player)="updateCurrentPlayer($event)"
+                                 (outcome)="updateWinner($event)">
+                </app-tic-tac-toe>
+            </div>
+            <div class="controls-content">
+                <button mat-fab class="create-btn extended-fab" color="primary" (click)="startNewGame()">
+                    <mat-icon>play_arrow</mat-icon>
+                    <span class="extended-fab__text">New game</span>
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

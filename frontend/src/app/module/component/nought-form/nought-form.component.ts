@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import EnumUtils from '../../util/enum-utils';
+import EnumUtils from '../../common/enum-utils';
 import {DateFormatterPipe} from '../../pipe/date-formatter.pipe';
-import ValidationUtils from '../../util/validation-utils';
+import ValidationUtils from '../../common/validation-utils';
 import {validation} from '../../model/validation';
 import {Color} from '../../model/color.enum';
 import {Nought} from '../../model/nought';

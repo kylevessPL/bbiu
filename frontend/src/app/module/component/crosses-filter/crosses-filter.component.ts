@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Material} from '../../model/material.enum';
-import ValidationUtils from '../../util/validation-utils';
+import ValidationUtils from '../../common/validation-utils';
 import {validation} from '../../model/validation';
 
 @Component({

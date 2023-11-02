@@ -1,20 +1,22 @@
-<mat-selection-list multiple="false" [hidden]="hidden">
-    <div mat-subheader>{{accessors.title}}</div>
-    <ng-container *ngIf="data?.length > 0; else emptyList">
-        <mat-list-option *ngFor="let item of data"
-                         [value]="item"
-                         [selected]="itemSelected(item)"
-                         (selectedChange)="selectItem(item, $event)">
-            <mat-icon fontSet="material-icons-outlined" matListIcon>{{accessors.icon}}</mat-icon>
-            <div mat-line>
-                {{item | dataPropertyGetter: accessors.primaryKey | dateFormatterPipe | booleanFormatterPipe}}
-            </div>
-            <div mat-line class="list-item-secondary">
-                {{item | dataPropertyGetter: accessors.secondaryKey | dateFormatterPipe | booleanFormatterPipe}}
-            </div>
-        </mat-list-option>
-    </ng-container>
-</mat-selection-list>
+<div [hidden]="hidden">
+    <mat-selection-list multiple="false">
+        <div mat-subheader>{{accessors.title}}</div>
+        <ng-container *ngIf="data?.length > 0; else emptyList">
+            <mat-list-option *ngFor="let item of data"
+                             [value]="item"
+                             [selected]="itemSelected(item)"
+                             (selectedChange)="selectItem(item, $event)">
+                <mat-icon fontSet="material-icons-outlined" matListIcon>{{accessors.icon}}</mat-icon>
+                <div mat-line>
+                    {{item | dataPropertyGetter: accessors.primaryKey | dateFormatterPipe | booleanFormatterPipe}}
+                </div>
+                <div mat-line class="list-item-secondary">
+                    {{item | dataPropertyGetter: accessors.secondaryKey | dateFormatterPipe | booleanFormatterPipe}}
+                </div>
+            </mat-list-option>
+        </ng-container>
+    </mat-selection-list>
+</div>
 
 <div [hidden]="!hidden">
     <mat-progress-spinner class="spinner" color="primary" mode="indeterminate"></mat-progress-spinner>

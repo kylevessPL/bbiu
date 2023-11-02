@@ -7,7 +7,7 @@ import {
     ConfirmationData,
     ConfirmationDialogComponent
 } from '../component/confirmation-dialog/confirmation-dialog.component';
-import DateUtils from '../util/date-utils';
+import DateUtils from '../common/date-utils';
 
 @Injectable({providedIn: 'root'})
 export class GlobalService {

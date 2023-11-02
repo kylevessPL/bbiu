@@ -52,6 +52,11 @@ import {SelectionListComponent} from './module/component/selection-list/selectio
 import {MatCarouselModule} from '@thouet/material-carousel';
 import {HomeComponent} from './module/page/home/home.component';
 import {AngularResizeEventModule} from 'angular-resize-event';
+import {SquarePieceComponent} from './module/component/square-piece/square-piece.component';
+import {TicTacToeComponent} from './module/component/tic-tac-toe/tic-tac-toe.component';
+import {NoughtsCrossesComponent} from './module/page/noughts-crosses/noughts-crosses.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
     declarations: [
@@ -60,8 +65,11 @@ import {AngularResizeEventModule} from 'angular-resize-event';
         NoughtsComponent,
         NoughtFormComponent,
         CrossesComponent,
+        NoughtsCrossesComponent,
         CrossFormDialogComponent,
         CrossesFilterComponent,
+        TicTacToeComponent,
+        SquarePieceComponent,
         FooterComponent,
         DataTableComponent,
         SelectionListComponent,
@@ -96,7 +104,9 @@ import {AngularResizeEventModule} from 'angular-resize-event';
         NgxNumbersOnlyDirectiveModule,
         NgOptimizedImage,
         MatCarouselModule,
-        AngularResizeEventModule
+        AngularResizeEventModule,
+        MatGridListModule,
+        MatExpansionModule
     ],
     providers: [
         {

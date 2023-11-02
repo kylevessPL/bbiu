@@ -3,9 +3,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Material} from '../../model/material.enum';
 import {Cross} from '../../model/cross';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import EnumUtils from '../../util/enum-utils';
+import EnumUtils from '../../common/enum-utils';
 import {DateFormatterPipe} from '../../pipe/date-formatter.pipe';
-import ValidationUtils from '../../util/validation-utils';
+import ValidationUtils from '../../common/validation-utils';
 import {validation} from '../../model/validation';
 import moment, {Moment} from 'moment';
 

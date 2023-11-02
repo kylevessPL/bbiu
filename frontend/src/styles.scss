@@ -16,6 +16,10 @@ body {
   display: inline-block !important;
 }
 
+.mat-card-subtitle {
+  margin-bottom: 0 !important;
+}
+
 .readonly-field {
   input {
     cursor: default;
@@ -63,7 +67,7 @@ body {
   overflow: hidden !important;
 }
 
-.mat-sort-header-content, .mat-paginator-page-size-select, .mat-option-text, .mat-list-text {
+.mat-sort-header-content, .mat-paginator-page-size-select, .mat-option-text, .mat-list-text, .mat-chip {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -71,11 +75,25 @@ body {
   user-select: none;
 }
 
+.mat-standard-chip::after {
+  background: none !important;
+}
+
+.mat-chip-list-wrapper {
+  margin: unset !important;
+}
+
 .carousel-slide, .carousel-slide-content, .carousel-list {
   height: 100% !important;
 }
 
-.home-content, .carousel, mat-carousel {
+.square-btn .mat-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.full-content, .carousel, mat-carousel {
   display: flex !important;
   flex-direction: column;
   flex-grow: 1;
