@@ -52,10 +52,10 @@ export class GameStatsComponent implements OnChanges {
     private calculateWinner = (statsMap: Map<Player, PlayerStats>) => Array.from(statsMap.entries())
         .map(([player, stats]) => [player, stats.wins])
         .reduce((a, b) => {
-            if (a[1] < b[1]) {
-                return b;
-            } else if (a[1] > b[1]) {
+            if (a[1] > b[1]) {
                 return a;
+            } else if (a[1] < b[1]) {
+                return b;
             } else {
                 return null;
             }

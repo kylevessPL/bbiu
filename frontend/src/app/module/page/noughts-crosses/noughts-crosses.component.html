@@ -8,7 +8,7 @@
             <div class="panel-content">
                 <div class="players-panel">
                     <h2 class="players-info">Players:</h2>
-                    <div class="players-content">
+                    <div class="players-content" [style.width.px]="gameWidth">
                         <mat-chip-list aria-label="Players">
                             <mat-chip *ngFor="let key of playerKeys"
                                       disableRipple disabled
@@ -34,7 +34,8 @@
                 <app-tic-tac-toe class="tic-tac-toe"
                                  [start]="newGame.asObservable()"
                                  (player)="updateCurrentPlayer($event)"
-                                 (outcome)="updateWinner($event)">
+                                 (outcome)="updateWinner($event)"
+                                 (resized)="gameResized($event)">
                 </app-tic-tac-toe>
                 <app-game-stats class="game-stats" [data]="outcomes" (resetEvent)="resetOutcomes()"></app-game-stats>
             </div>

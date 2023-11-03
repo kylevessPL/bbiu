@@ -1,6 +1,7 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {Player} from '../../model/player.enum';
 import {Subject} from 'rxjs';
+import {ResizedEvent} from 'angular-resize-event';
 
 @Component({
     selector: 'app-noughts-crosses',
@@ -14,6 +15,8 @@ export class NoughtsCrossesComponent implements AfterViewInit {
     winner: Player;
     outcomes: Player[] = [];
     newGame = new Subject<void>();
+
+    protected gameWidth: number;
 
     get winnerMessage() {
         switch (this.winner) {
@@ -59,5 +62,9 @@ export class NoughtsCrossesComponent implements AfterViewInit {
 
     resetOutcomes = () => {
         this.outcomes = [];
+    }
+
+    gameResized(event: ResizedEvent) {
+        this.gameWidth = event.newRect.width;
     }
 }
