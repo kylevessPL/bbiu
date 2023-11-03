@@ -89,21 +89,43 @@
 }
 
 .tic-tac-toe {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  margin-right: 24px;
+  aspect-ratio: 1 / 1;
   height: 100% !important;
+}
+
+.players-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .game-content {
   display: flex;
-  flex-direction: column;
-  aspect-ratio: 1 / 1;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
   height: 100%;
+}
+
+.panel-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .noughts-crosses-content {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   height: 100%;
+}
+
+.game-stats {
+  flex-grow: 1;
+  max-width: 40%;
 }
