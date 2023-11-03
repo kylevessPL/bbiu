@@ -1,4 +1,4 @@
 export enum Player {
-    X = 'X',
-    O = 'O'
+    X = '╳',
+    O = '◯'
 }

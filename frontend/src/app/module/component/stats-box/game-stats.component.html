@@ -1,0 +1,30 @@
+<mat-card>
+    <mat-card-title>Statistics</mat-card-title>
+    <mat-card-content>
+        <table>
+            <tr>
+                <th></th>
+                <th *ngFor="let player of playerKeys">
+                    Player {{player}}
+                </th>
+            </tr>
+            <tr *ngFor="let stats of playersStats | keyvalue">
+                <td>{{stats.key}}</td>
+                <td *ngFor="let value of stats.value">
+                    {{value}}
+                </td>
+            </tr>
+            <tr>
+                <td>Ties</td>
+                <td [colSpan]="playerKeys.length">{{ties}}</td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td [colSpan]="playerKeys.length">{{total}}</td>
+            </tr>
+        </table>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="reset()">Reset</button>
+    </mat-card-actions>
+</mat-card>

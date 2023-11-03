@@ -54,6 +54,7 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
         this.squares = Array(9).fill(null);
         this.disabled = false;
         this.player.emit(initialPlayer);
+        this.outcome.emit(undefined);
     }
 
     makeMove = (position: number) => {
@@ -77,7 +78,7 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
         const winner = winConditions.find(([a, b, c]) =>
             this.squares[a] && this.squares[a] === this.squares[b] && this.squares[a] === this.squares[c]
         )?.map(index => this.squares[index])?.at(0);
-        return winner ?? this.gameCompleted() ? null : undefined;
+        return winner ?? (this.gameCompleted() ? null : undefined);
     }
 
     private gameCompleted = () => this.squares.every(value => value !== null);

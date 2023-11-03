@@ -57,6 +57,7 @@ import {TicTacToeComponent} from './module/component/tic-tac-toe/tic-tac-toe.com
 import {NoughtsCrossesComponent} from './module/page/noughts-crosses/noughts-crosses.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {GameStatsComponent} from './module/component/stats-box/game-stats.component';
 
 @NgModule({
     declarations: [
@@ -72,6 +73,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
         SquarePieceComponent,
         FooterComponent,
         DataTableComponent,
+        GameStatsComponent,
         SelectionListComponent,
         ConfirmationDialogComponent,
         TypeSafeMatCellDefDirective,

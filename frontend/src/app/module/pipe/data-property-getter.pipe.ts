@@ -4,6 +4,6 @@ import {get} from 'get-wild';
 @Pipe({name: 'dataPropertyGetter'})
 export class DataPropertyGetterPipe implements PipeTransform {
     transform(object: any, keyName: string): unknown {
-        return get(object, keyName);
+        return keyName !== 'self' ? get(object, keyName) : object;
     }
 }
