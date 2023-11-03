@@ -8,7 +8,7 @@
                     Player {{player}}
                 </th>
             </tr>
-            <tr *ngFor="let stats of playersStats | keyvalue">
+            <tr *ngFor="let stats of playersStats | keyvalue: mapOrder">
                 <td class="data-unit">{{stats.key}}</td>
                 <td *ngFor="let value of stats.value">
                     {{value}}
@@ -21,6 +21,10 @@
             <tr>
                 <td class="data-unit">Total</td>
                 <td [colSpan]="playerKeys.length">{{total}}</td>
+            </tr>
+            <tr>
+                <td class="data-unit">Winner</td>
+                <td [colSpan]="playerKeys.length"><strong>{{winner ? 'Player ' + winner : 'Tie'}}</strong></td>
             </tr>
         </table>
     </mat-card-content>
