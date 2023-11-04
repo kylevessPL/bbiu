@@ -52,7 +52,7 @@ export class CrossFormDialogComponent implements OnInit {
             expiryDate: expiryDate ? moment(expiryDate) : null,
             comment: [comment, Validators.maxLength(this.commentMaxLength)],
             angle: [angle, [Validators.required, Validators.min(this.angleMin), Validators.max(this.angleMax)]],
-            weight: [weight, [Validators.required, Validators.min(this.weightMin), Validators.max(this.weightMax)]],
+            weight: [weight ?? this.weightMin, [Validators.required, Validators.min(this.weightMin), Validators.max(this.weightMax)]],
             beams: [beams, [Validators.required, Validators.min(this.beamsMin)]],
             material: [EnumUtils.getEnumKey(Material, material), Validators.required]
         });

@@ -68,14 +68,26 @@
             </mat-form-field>
         </div>
         <div class="form-field-row">
-            <mat-form-field class="form-field">
+            <mat-form-field class="form-field weight-slider">
                 <mat-label>Weight</mat-label>
-                <input matInput NgxNumbersOnly type="number" inputmode="number" [min]="weightMin" [max]="weightMax"
-                       formControlName="weight">
+                <input matInput type="number" [class.cdk-visually-hidden]="true" formControlName="weight">
+                <mat-slider #slider
+                            thumbLabel
+                            tickInterval="1"
+                            step="1"
+                            [min]="weightMin" [max]="weightMax"
+                            [value]="form.get('weight').value"
+                            (change)="form.get('weight').setValue($event.value)">
+                </mat-slider>
+                <span matSuffix>
+                    <span *ngIf="slider.value < 10" class="invisible">0</span>
+                    <span>{{slider.value}}</span></span>
                 <mat-error *ngIf="isRequiredError('weight')">{{requiredErrorMessage()}}</mat-error>
                 <mat-error *ngIf="isNumberMinError('weight')">{{numberMinErrorMessage(weightMin)}}</mat-error>
                 <mat-error *ngIf="isNumberMaxError('weight')">{{numberMaxErrorMessage(weightMax)}}</mat-error>
             </mat-form-field>
+        </div>
+        <div class="form-field-row">
             <mat-form-field class="form-field">
                 <mat-label>Beams</mat-label>
                 <input matInput NgxNumbersOnly type="number" inputmode="number" [min]="beamsMin"
@@ -83,8 +95,6 @@
                 <mat-error *ngIf="isRequiredError('beams')">{{requiredErrorMessage()}}</mat-error>
                 <mat-error *ngIf="isNumberMinError('beams')">{{numberMinErrorMessage(beamsMin)}}</mat-error>
             </mat-form-field>
-        </div>
-        <div class="form-field-row">
             <mat-form-field class="form-field">
                 <mat-label>Material</mat-label>
                 <mat-select formControlName="material">

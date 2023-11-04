@@ -44,6 +44,15 @@ body {
   }
 }
 
+.invisible {
+  visibility: hidden;
+}
+
+.weight-slider .mat-form-field-suffix {
+  top: 20px !important;
+  margin-left: 6px;
+}
+
 .select-reset {
   min-width: calc(100% + 104px) !important;
 }
@@ -61,6 +70,10 @@ body {
     letter-spacing: .1em;
     text-transform: uppercase;
   }
+}
+
+mat-slider {
+  width: 100%;
 }
 
 .mat-drawer-inner-container {

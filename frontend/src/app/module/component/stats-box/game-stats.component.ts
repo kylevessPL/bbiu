@@ -11,6 +11,7 @@ export class GameStatsComponent implements OnChanges {
     @Input() data: Player[];
     @Output() resetEvent = new EventEmitter<void>();
 
+    protected readonly player = Player;
     protected readonly playerKeys = Object.keys(Player);
     protected playersStats: Map<string, number[]>;
     protected ties: number;

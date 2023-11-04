@@ -4,8 +4,8 @@
         <table>
             <tr>
                 <th></th>
-                <th *ngFor="let player of playerKeys">
-                    Player {{player}}
+                <th *ngFor="let key of playerKeys">
+                    Player {{player[key]}}
                 </th>
             </tr>
             <tr *ngFor="let stats of playersStats | keyvalue: mapOrder">
