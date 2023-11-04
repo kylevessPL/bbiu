@@ -15,7 +15,7 @@ export class GameStatsComponent implements OnChanges {
     protected readonly playerKeys = Object.keys(Player);
     protected playersStats: Map<string, number[]>;
     protected ties: number;
-    protected total: number;
+    protected sets: number;
     protected winner: Player;
 
     protected readonly mapOrder = (): number => 0;
@@ -28,7 +28,7 @@ export class GameStatsComponent implements OnChanges {
 
     private calculateStats = () => {
         this.ties = ArrayUtils.countBy(this.data, x => x === null);
-        this.total = this.data.length;
+        this.sets = this.data.length;
         this.calculateIndividualStats();
     }
 
@@ -36,7 +36,7 @@ export class GameStatsComponent implements OnChanges {
         const statsMap = this.playerKeys.reduce((map, player) => {
             map.set(Player[player], {
                 wins: 0,
-                losses: this.total - this.ties
+                losses: this.sets - this.ties
             });
             return map;
         }, new Map<Player, PlayerStats>());
