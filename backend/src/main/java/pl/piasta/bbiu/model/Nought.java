@@ -47,11 +47,11 @@ public class Nought extends ModificationTrackedEntity {
     @Default
     private Color color = BLACK;
 
-    @Column(
-            nullable = false, insertable = false, updatable = false,
-            columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP"
-    )
-    private Instant creationDate;
+    @Column(nullable = false,
+            updatable = false,
+            columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Default
+    private Instant creationDate = Instant.now();
 
     @Setter
     @Column(insertable = false)

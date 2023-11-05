@@ -118,7 +118,7 @@ export class NoughtsComponent implements OnInit {
             radius: undefined,
             color: undefined
         };
-        this.data.push(item);
+        this.data.unshift(item);
     }
 
     private removeDataItem = () => {
