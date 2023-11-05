@@ -16,7 +16,7 @@ export class GameStatsComponent implements OnChanges {
     protected playersStats: Map<string, number[]>;
     protected ties: number;
     protected sets: number;
-    protected winner: Player;
+    protected winner: Player = null;
 
     protected readonly mapOrder = (): number => 0;
 
@@ -25,6 +25,17 @@ export class GameStatsComponent implements OnChanges {
     }
 
     reset = () => this.resetEvent.emit();
+
+    protected playerClass = (key: Player) => {
+        switch (key) {
+            case Player.X:
+                return 'player-x';
+            case Player.O:
+                return 'player-o';
+            default:
+                return 'player-other';
+        }
+    }
 
     private calculateStats = () => {
         this.ties = ArrayUtils.countBy(this.data, x => x === null);

@@ -1,3 +1,5 @@
+@import "src/assets/scss/colors";
+
 .mat-card-actions > button {
   text-transform: uppercase;
 }
@@ -16,4 +18,16 @@ th, td {
   &:not(.data-unit) {
     text-align: center;
   }
+}
+
+.player-x {
+  color: $color-accent;
+}
+
+.player-o {
+  color: $color-warn;
+}
+
+.player-other {
+  color: $color-alternative;
 }

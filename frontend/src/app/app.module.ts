@@ -58,6 +58,7 @@ import {NoughtsCrossesComponent} from './module/page/noughts-crosses/noughts-cro
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {GameStatsComponent} from './module/component/stats-box/game-stats.component';
+import {StrikeThroughComponent} from './module/component/strike-through/strike-through.component';
 
 @NgModule({
     declarations: [
@@ -74,6 +75,7 @@ import {GameStatsComponent} from './module/component/stats-box/game-stats.compon
         FooterComponent,
         DataTableComponent,
         GameStatsComponent,
+        StrikeThroughComponent,
         SelectionListComponent,
         ConfirmationDialogComponent,
         TypeSafeMatCellDefDirective,

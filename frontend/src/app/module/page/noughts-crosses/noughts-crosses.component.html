@@ -18,9 +18,7 @@
                                 Player {{player[key]}}
                             </mat-chip>
                         </mat-chip-list>
-                        <h3 *ngIf="winner !== undefined"
-                            [ngClass]="winnerClass"
-                            class="winner-info">
+                        <h3 *ngIf="winner !== undefined" [ngClass]="winnerClass" class="winner-info">
                             {{winnerMessage}}
                         </h3>
                     </div>

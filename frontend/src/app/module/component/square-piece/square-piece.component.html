@@ -1,3 +1,8 @@
-<button mat-flat-button class="square-btn" [color]="getColor()" [disabled]="isDisabled()" disableRipple>
-    <mat-icon fontSet="material-icons-outlined">{{getIcon()}}</mat-icon>
+<button mat-flat-button
+        class="square-btn"
+        [ngClass]="{'move-disabled': moveDisabled}"
+        [color]="color"
+        [disabled]="fullyDisabled"
+        disableRipple>
+    <mat-icon fontSet="material-icons-outlined">{{icon}}</mat-icon>
 </button>

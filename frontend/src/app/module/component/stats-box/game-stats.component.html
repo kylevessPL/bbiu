@@ -4,7 +4,7 @@
         <table>
             <tr>
                 <th></th>
-                <th *ngFor="let key of playerKeys">
+                <th *ngFor="let key of playerKeys" [ngClass]="playerClass(player[key])">
                     Player {{player[key]}}
                 </th>
             </tr>
@@ -24,7 +24,11 @@
             </tr>
             <tr>
                 <td class="data-unit">Winner</td>
-                <td [colSpan]="playerKeys.length"><strong>{{winner ? 'Player ' + winner : 'Tie'}}</strong></td>
+                <td [colSpan]="playerKeys.length">
+                    <ng-container *ngTemplateOutlet="placeholder"></ng-container>
+                    <strong [ngClass]="playerClass(winner)">{{winner ? 'Player ' + winner : 'Tie'}}</strong>
+                    <ng-container *ngTemplateOutlet="placeholder"></ng-container>
+                </td>
             </tr>
         </table>
     </mat-card-content>
@@ -32,3 +36,7 @@
         <button mat-stroked-button (click)="reset()">Reset</button>
     </mat-card-actions>
 </mat-card>
+
+<ng-template #placeholder>
+    <strong *ngIf="winner == null" class="invisible">╳</strong>
+</ng-template>

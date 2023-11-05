@@ -10,7 +10,7 @@
   height: 100%;
 
   &.mat-primary {
-    background-color: $color-primary !important;
+    background-color: $color-alternative !important;
   }
 
   &.mat-accent {
@@ -30,5 +30,8 @@
 
 .mat-button-disabled {
   color: white !important;
-  cursor: not-allowed !important;
+
+  &.move-disabled {
+    cursor: not-allowed !important;
+  }
 }

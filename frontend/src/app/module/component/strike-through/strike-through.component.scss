@@ -1,0 +1,15 @@
+@import "src/assets/scss/colors";
+
+svg {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: visible;
+
+  line {
+    stroke: $color-primary;
+    stroke-width: 10;
+    stroke-linecap: round
+  }
+}

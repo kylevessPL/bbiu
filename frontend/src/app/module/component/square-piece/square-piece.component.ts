@@ -10,7 +10,7 @@ export class SquarePieceComponent {
     @Input() player?: Player;
     @Input() disabled = false;
 
-    getColor = () => {
+    protected get color() {
         switch (this.player) {
             case Player.X:
                 return 'accent';
@@ -21,7 +21,7 @@ export class SquarePieceComponent {
         }
     }
 
-    getIcon = () => {
+    protected get icon() {
         switch (this.player) {
             case Player.X:
                 return 'close';
@@ -32,5 +32,11 @@ export class SquarePieceComponent {
         }
     }
 
-    isDisabled = () => this.disabled || this.player !== null;
+    protected get moveDisabled() {
+        return !this.disabled && this.player !== null;
+    }
+
+    protected get fullyDisabled() {
+        return this.disabled || this.player !== null;
+    }
 }
