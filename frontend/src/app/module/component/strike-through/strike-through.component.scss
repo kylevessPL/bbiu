@@ -10,6 +10,7 @@ svg {
   line {
     stroke: $color-primary;
     stroke-width: 10;
-    stroke-linecap: round
+    stroke-dasharray: 150%;
+    stroke-linecap: round;
   }
 }

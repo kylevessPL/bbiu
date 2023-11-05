@@ -32,10 +32,6 @@ export class SquarePieceComponent {
         }
     }
 
-    protected get moveDisabled() {
-        return !this.disabled && this.player !== null;
-    }
-
     protected get fullyDisabled() {
         return this.disabled || this.player !== null;
     }

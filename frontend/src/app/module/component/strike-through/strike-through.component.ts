@@ -1,9 +1,18 @@
 import {Component, Input, OnChanges} from '@angular/core';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
     selector: 'app-strike-through',
     templateUrl: './strike-through.component.html',
-    styleUrls: ['./strike-through.component.scss']
+    styleUrls: ['./strike-through.component.scss'],
+    animations: [
+        trigger('stroke', [
+            transition(':enter', [
+                style({'stroke-dashoffset': '150%'}),
+                animate(700, style({'stroke-dashoffset': '0'})),
+            ]),
+        ])
+    ]
 })
 export class StrikeThroughComponent implements OnChanges {
     @Input() elements: DOMRect[];

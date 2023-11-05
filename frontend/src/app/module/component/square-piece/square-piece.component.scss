@@ -30,8 +30,5 @@
 
 .mat-button-disabled {
   color: white !important;
-
-  &.move-disabled {
-    cursor: not-allowed !important;
-  }
+  cursor: not-allowed !important;
 }
