@@ -32,7 +32,10 @@ export class SelectionListComponent<T> implements OnChanges {
         }
     }
 
-    selectItem = (item: T, changed: boolean) => changed && this.selectionEvent.emit(item);
+    selectItem = (item: T, changed: boolean) => {
+        const identifier = this.accessors.identifier;
+        return changed && this.selected?.[identifier] !== item[identifier] && this.selectionEvent.emit(item);
+    }
 
     itemSelected = (item: T) => {
         const identifier = this.accessors.identifier;
