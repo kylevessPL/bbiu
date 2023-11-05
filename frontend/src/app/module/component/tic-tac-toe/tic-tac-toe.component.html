@@ -3,10 +3,6 @@
         <app-strike-through *ngIf="outcomePieces" [elements]="outcomePieces" class="strike"></app-strike-through>
     </mat-grid-tile-header>
     <mat-grid-tile *ngFor="let square of squares; let position = index">
-        <app-square-piece #piece
-                          [player]="square"
-                          [disabled]="disabled"
-                          (click)=makeMove(position)>
-        </app-square-piece>
+        <app-square-piece #piece [player]="square" [disabled]="disabled" (click)=makeMove(position)></app-square-piece>
     </mat-grid-tile>
 </mat-grid-list>
